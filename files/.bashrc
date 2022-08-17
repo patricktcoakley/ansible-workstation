@@ -1,5 +1,3 @@
-# Last generated: {{ template_run_date }} 
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
@@ -12,6 +10,5 @@ if [ -f /usr/share/fzf ]; then
 fi
 
 # User specific environment and startup programs
-. "$HOME/.cargo/env"
 eval "$(pyenv init -)"
 eval "$(starship init bash)"

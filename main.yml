@@ -3,10 +3,123 @@
   vars_files:
     - "vars/user.yml"
   tasks:
-    - name: User configuration
-      import_tasks: tasks/user-configuration.yml
-      tags: ["configuration"]
-    - name: Install user packages
-      import_tasks: tasks/user-packages.yml
-      tags: ["user-packages", "packages"]
+    - name: Ensure .bashrc is created
+      copy:
+        src: files/.bashrc
+        dest: $HOME/.bashrc
+    - name: Ensure .bash_profile is created
+      copy:
+        src: files/.bash_profile
+        dest: $HOME/.bash_profile
+    - name: Ensure starship.toml is created
+      copy:
+        src: files/starship.toml
+        dest: $HOME/.config/starship.toml
+    - name: Ensure alacritty.yml is created
+      copy:
+        src: files/alacritty.yml
+        dest: $HOME/.config/alacritty.yml
+    - name: Neovim configuration
+      block:
+        - name: Ensure nvim folder is created
+          file:
+            path: $HOME/.config/nvim
+            state: directory
+        - name: Ensure init.lua is copied
+          copy:
+            src: files/init.lua
+            dest: $HOME/.config/nvim/init.lua
+        - name: Ensure nvim packages are installed
+          shell: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
+          register: output
+          failed_when: output.rc != 0
+    - name: Ensure git config global user.name is set
+      git_config:
+        name: user.name
+        scope: global
+        value: "{{ git_name }}"
+    - name: Ensure git config global user.email is set
+      git_config:
+        name: user.email
+        scope: global
+        value: "{{ git_email }}"
+    - name: Ensure git config editor is set
+      git_config:
+        name: core.editor
+        scope: global
+        value: "{{ editor }}"
+    - name: Ensure Code settings.json is created
+      copy:
+        src: files/settings.json
+        dest: "$HOME/.config/Code - Insiders/User/settings.json"
+    - name: Check if fonts are installed
+      ansible.builtin.find:
+        paths: ~/.local/share/fonts
+        patterns: "*.ttf"
+        recurse: yes
+      register: fonts_installed
+    - name: Font Installation
+      block:
+        - name: Ensure fonts folders exists
+          file:
+            path: "$HOME/.local/share/fonts/{{ item }}"
+            state: directory
+          loop: "{{ fonts_to_install.keys() }}"
+        - name: Download extra fonts
+          unarchive:
+            src: "{{ item.value }}"
+            dest: "$HOME/.local/share/fonts/{{ item.key }}"
+            creates: "~/.local/share/fonts/{{ item.key }}/*.ttf"
+            remote_src: yes
+          loop: "{{ fonts_to_install | dict2items }}"
+        - name: Run fc-cache
+          command: fc-cache
+          register: output
+          failed_when: output.rc != 0
+          changed_when: '"caching, new cache contents" in output.stdout'
+      when: fonts_installed.matched == 0
+    - name: Ensure provided Code extensions are installed
+      block:
+        - name: Get installed extensions
+          shell: "code-insiders --list-extensions"
+          register: installed_extensions
+          changed_when: false
+        - name: Uninstall existing extensions
+          shell: "code-insiders --list-extensions | xargs -n1 code-insiders --uninstall-extension"
+          when: "code_extensions_to_install != installed_extensions.stdout_lines"
+        - name: Code extensions installation
+          shell: "code-insiders --install-extension {{ item }}"
+          loop: "{{ code_extensions_to_install }}"
+          register: output
+          failed_when: output.rc != 0
+          changed_when: '"already installed" not in output.stdout'
+          when: "code_extensions_to_install != installed_extensions.stdout_lines"
+      tags: ["code"]
+    - name: Python installation via pyenv
+      block:
+        - name: Ensure selected version of Python is installed with pyenv
+          shell: "pyenv install {{ python_to_install }} -s && pyenv global {{ python_to_install }}"
+          register: output
+          changed_when: '"Installed" in output'
+          failed_when: output.rc != 0
+        - name: Ensure Python packages are installed to global pyenv
+          shell: 'pip install {{ python_packages_to_install | join(" ") }}'
+          register: output
+          failed_when: output.rc != 0
+          changed_when: '"Requirement already satisfied" not in output.stdout'
+      tags: ["python"]
+    - name: Ensure Rust stable channel is installed via rustup
+      shell: "rustup install {{ rust_to_install }}"
+      register: output
+      changed_when: '"installing" in output.stdout'
+      failed_when: output.rc != 0
+      tags: ["rust"]
+    - name: Ensure user services are enabled
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        scope: user
+        state: started
+        enabled: yes
+      loop: "{{ services }}"
+      tags: ["systemd"]
   become_user: "{{ user }}"

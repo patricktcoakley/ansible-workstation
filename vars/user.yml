@@ -1,26 +1,20 @@
+# Configuration
 user: patrick
 editor: nvim
 git_name: "Patrick T Coakley"
 git_email: contact@patricktcoakley.com
-aliases:
-  code: code-insiders
-  ll: ls -alh
-paths:
-  - $PYENV_ROOT/bin
-  - $HOME/go/bin
 
+# Packages
 fonts_to_install:
   CascadiaCode: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip
   SourceCodePro: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip
-
 python_to_install: 3.10.6
-
 python_packages_to_install:
   - ipython
   - pygame
   - autopep8
   - mkdocs
-
+rust_to_install: stable
 code_extensions_to_install:
   - asvetliakov.vscode-neovim
   - batisteo.vscode-django
@@ -61,5 +55,6 @@ code_extensions_to_install:
   - wholroyd.jinja
   - yzhang.markdown-all-in-one
 
-user_services:
+# Services
+services:
   - syncthing.service
