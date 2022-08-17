@@ -33,6 +33,14 @@
           shell: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
           register: output
           failed_when: output.rc != 0
+    - name: Ensure bin folder is created
+      file:
+        path: $HOME/bin
+        state: directory
+    - name: Ensure bin folder is copied
+      copy:
+        src: files/home/bin/
+        dest: $HOME/bin/
     - name: Ensure Code settings.json is created
       copy:
         src: files/home/.config/Code - Insiders/User/settings.json
