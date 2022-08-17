@@ -1,0 +1,50 @@
+---
+- name: Ensure bash-completions is created
+  file:
+    path: $HOME/.local/share/bash-completion/completions
+    state: directory
+- name: Ensure starship.toml is created
+  copy:
+    src: files/starship.toml
+    dest: $HOME/.config/starship.toml
+- name: Ensure alacritty.yml is created
+  copy:
+    src: files/alacritty.yml
+    dest: $HOME/.config/alacritty.yml
+- name: Neovim
+  block:
+    - name: Ensure nvim folder is created
+      file:
+        path: $HOME/.config/nvim
+        state: directory
+    - name: Ensure init.lua is copied
+      copy:
+        src: files/init.lua
+        dest: $HOME/.config/nvim/init.lua
+- name: Ensure .bashrc is created
+  template:
+    src: templates/bashrc.j2
+    dest: $HOME/.bashrc
+- name: Ensure ~/.bash_profile is created
+  template:
+    src: templates/bash_profile.j2
+    dest: $HOME/.bash_profile
+- name: Ensure git config global user.name is set
+  git_config:
+    name: user.name
+    scope: global
+    value: "{{ git_name }}"
+- name: Ensure git config global user.email is set
+  git_config:
+    name: user.email
+    scope: global
+    value: "{{ git_email }}"
+- name: Ensure git config editor is set
+  git_config:
+    name: core.editor
+    scope: global
+    value: "{{ editor }}"
+- name: Ensure Code settings.json is created
+  copy:
+    src: files/settings.json
+    dest: "$HOME/.config/Code - Insiders/User/settings.json"
