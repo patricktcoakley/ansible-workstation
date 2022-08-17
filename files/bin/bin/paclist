@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$#" -gt 1 ]; then
+    echo "Invalid argument." && exit 1
+fi
+
+case "$1" in
+	"aur") pacman -Qqm ;;
+	"system") pacman -Qqe | grep -v "$(pacman -Qqm)" ;;
+	"") pacman -Qqe ;;
+	*) echo "Invalid argument $1" && exit 1 ;;
+esac
