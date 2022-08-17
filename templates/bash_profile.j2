@@ -1,0 +1,21 @@
+# Last generated: {{ template_run_date }} 
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+export PYENV_ROOT="$HOME/.pyenv"
+export GTK_USE_PORTAL=1
+export EDITOR="{{ editor }}"
+
+# PATH
+{% for path in paths %}
+export PATH="{{ path }}:$PATH"
+{% endfor %}
+
+# Aliases
+{% for k,v in aliases.items() %}
+alias {{ k }}="{{ v }}"
+{% endfor %}

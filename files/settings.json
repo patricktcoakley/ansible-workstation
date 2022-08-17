@@ -1,0 +1,57 @@
+{
+    "cmake.configureOnOpen": true,
+    "editor.fontSize": 18,
+    "editor.semanticHighlighting.enabled": true,
+    "Lua.telemetry.enable": false,
+    "terminal.integrated.fontSize": 20,
+    "cmake.buildTask": true,
+    "cmake.useCMakePresets": "always",
+    "eslint.alwaysShowStatus": true,
+    "eslint.format.enable": true,
+    "eslint.debug": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "eslint.lintTask.enable": true,
+    "javascript.format.enable": false,
+    "typescript.format.enable": false,
+    "[javascript]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "C_Cpp.default.includePath": [
+        "/usr/local/include",
+        "/usr/include"
+    ],
+    "files.autoSave": "afterDelay",
+    "editor.formatOnSave": true,
+    "files.autoSaveDelay": 1,
+    "window.titleBarStyle": "custom",
+    "python.analysis.typeCheckingMode": "strict",
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.fontFamily": "'CaskaydiaCove Nerd Font', 'Cascadia Code', 'Source Code Pro', monospace",
+    "editor.fontWeight": "400",
+    "terminal.integrated.fontFamily": "'CaskaydiaCove Nerd Font Mono'",
+    "editor.minimap.enabled": false,
+    "terminal.integrated.gpuAcceleration": "on",
+    "settingsSync.ignoredSettings": [
+        "workbench.panel.defaultLocation"
+    ],
+    "terminal.integrated.enablePersistentSessions": false,
+    "files.exclude": {
+        "**/.trunk/*out": true
+    },
+    "files.watcherExclude": {
+        "**/.trunk/*out": true
+    },
+    "trunk.trunkGrayOutNonBlockingIssues": false,
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "gitlens.keymap": "none",
+    "workbench.colorTheme": "Night Owl (No Italics)",
+    "telemetry.telemetryLevel": "off",
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+    "redhat.telemetry.enabled": false,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
+    "terminal.integrated.allowChords": false
+}

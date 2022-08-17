@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  vars_files:
+    - "vars/user.yml"
+  tasks:
+    - name: User configuration
+      import_tasks: tasks/user-configuration.yml
+      tags: ["configuration"]
+    - name: Install user packages
+      import_tasks: tasks/user-packages.yml
+      tags: ["user-packages", "packages"]
+  become_user: "{{ user }}"
