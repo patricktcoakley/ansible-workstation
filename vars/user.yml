@@ -16,8 +16,6 @@ python_packages_to_install:
   - mkdocs
 rust_to_install: stable
 code_extensions_to_install:
-  - asvetliakov.vscode-neovim
-  - batisteo.vscode-django
   - bungcip.better-toml
   - cargo-inspect-vscode.cargo-inspect
   - cschlosser.doxdocgen
@@ -52,6 +50,7 @@ code_extensions_to_install:
   - sumneko.lua
   - twxs.cmake
   - vadimcn.vscode-lldb
+  - vscodevim.vim
   - wholroyd.jinja
   - yzhang.markdown-all-in-one
 
