@@ -4,7 +4,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Source user definitions
-if [ -f /usr/share/fzf ]; then
+if [ -d /usr/share/fzf ]; then
 	. /usr/share/fzf/key-bindings.bash
 	. /usr/share/fzf/completion.bash
 fi
