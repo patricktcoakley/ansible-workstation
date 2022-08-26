@@ -2,15 +2,33 @@
 - hosts: localhost
   vars_files:
     - "vars/user.yml"
-    - "vars/system.yml"
+    - "vars/arch.yml"
   tasks:
-    - name: System configuration
+    - name: Arch System configuration
       block:
         - name: Ensure packages are installed
           community.general.pacman:
             name: "{{ packages }}"
             state: present
+        - name: Ensure user services are enabled
+          ansible.builtin.systemd:
+            name: "{{ item }}"
+            scope: user
+            state: started
+            enabled: yes
+          loop: "{{ user_services }}"
+          tags: ["systemd"]
+        - name: Ensure user services are enabled
+          ansible.builtin.systemd:
+            name: "{{ item }}"
+            scope: system
+            state: started
+            enabled: yes
+          loop: "{{ system_services }}"
+          tags: ["systemd"]
       become: true
+      when: ansible_os_family == "ArchLinux"
+
     - name: User configuration
       block:
         - name: Ensure .bashrc is created
@@ -51,10 +69,11 @@
           copy:
             src: files/home/bin/
             dest: $HOME/bin/
+          when: ansible_os_family == "ArchLinux"
         - name: Ensure Code settings.json is created
           copy:
             src: files/home/.config/Code - Insiders/User/settings.json
-            dest: "$HOME/.config/Code - Insiders/User/settings.json"
+            dest: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User/settings.json"
         - name: Ensure git config global user.name is set
           git_config:
             name: user.name
@@ -132,13 +151,5 @@
           changed_when: '"installing" in output.stdout'
           failed_when: output.rc != 0
           tags: ["rust"]
-        - name: Ensure user services are enabled
-          ansible.builtin.systemd:
-            name: "{{ item }}"
-            scope: user
-            state: started
-            enabled: yes
-          loop: "{{ services }}"
-          tags: ["systemd"]
       become_user: "{{ user }}"
       become: false

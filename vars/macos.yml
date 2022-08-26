@@ -1,0 +1,25 @@
+packages:
+  - alacritty
+  - ansible
+  - bash-completion
+  - clang
+  - cmake
+  - discord
+  - fzf
+  - gcc
+  - git
+  - go
+  - godot
+  - htop
+  - llvm
+  - pyenv
+  - rustup
+  - starship
+  - steam
+  - stylua
+  - syncthing
+  - thunderbird
+  - unzip
+  - vi
+  - vlc
+  - zellij

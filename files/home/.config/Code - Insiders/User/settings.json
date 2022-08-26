@@ -49,9 +49,9 @@
     "workbench.colorTheme": "Night Owl (No Italics)",
     "telemetry.telemetryLevel": "off",
     "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+    "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
     "redhat.telemetry.enabled": false,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "vscode-neovim.neovimExecutablePaths.darwin": "/opt/homebrew/bin/nvim",
     "terminal.integrated.allowChords": false
 }

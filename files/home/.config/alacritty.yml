@@ -2,8 +2,3 @@ font:
   normal:
     family: "CaskaydiaCove Nerd Font Mono"
   size: 14
-shell:
-  program: /bin/bash
-  args:
-    - -c
-    - zellij attach --index 0 || zellij
