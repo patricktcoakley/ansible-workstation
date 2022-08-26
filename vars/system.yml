@@ -16,15 +16,18 @@ packages:
   - cmake
   - discord
   - fzf
+  - gcc
   - git
   - go
   - godot
+  - htop
+  - kate
   - kcalc
+  - ksysguard
   - lldb
   - llvm
   - lua-language-server
   - man-db
-  - neovim-git
   - okular
   - otf-ipafont
   - power-profiles-daemon

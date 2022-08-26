@@ -10,5 +10,15 @@ if [ -f /usr/share/fzf ]; then
 fi
 
 # User specific environment and startup programs
+export PYENV_ROOT="$HOME/.pyenv"
+export GTK_USE_PORTAL=1
+export EDITOR="nvim"
+
+# Aliases
+alias code="code-insiders"
+alias codeext="code-insiders --list-extensions"
+alias ll="ls -alh"
+
+# User specific environment and startup programs
 eval "$(pyenv init -)"
 eval "$(starship init bash)"
