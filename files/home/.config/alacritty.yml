@@ -1,6 +1,5 @@
 font:
   normal:
     family: "CaskaydiaCove Nerd Font Mono"
-  size: 14
 window:
   startup_mode: maximized

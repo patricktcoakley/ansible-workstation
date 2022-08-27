@@ -3,6 +3,9 @@
   vars_files:
     - "vars/user.yml"
     - "vars/arch.yml"
+  vars:
+    zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
+    code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
   tasks:
     - name: Arch System configuration
       block:
@@ -10,15 +13,7 @@
           community.general.pacman:
             name: "{{ packages }}"
             state: present
-        - name: Ensure user services are enabled
-          ansible.builtin.systemd:
-            name: "{{ item }}"
-            scope: user
-            state: started
-            enabled: yes
-          loop: "{{ user_services }}"
-          tags: ["systemd"]
-        - name: Ensure user services are enabled
+        - name: Ensure system services are enabled
           ansible.builtin.systemd:
             name: "{{ item }}"
             scope: system
@@ -27,7 +22,7 @@
           loop: "{{ system_services }}"
           tags: ["systemd"]
       become: true
-      when: ansible_os_family == "ArchLinux"
+      when: ansible_os_family == "Archlinux"
 
     - name: User configuration
       block:
@@ -47,6 +42,18 @@
           copy:
             src: files/home/.config/alacritty.yml
             dest: $HOME/.config/alacritty.yml
+          tags: ["alacritty"]
+        - name: Zellij configuration
+          block:
+            - name: Ensure zellij folder is created
+              file:
+                path: "{{ zellij_config_path }}"
+                state: directory
+            - name: Ensure zellij config is created
+              copy:
+                src: files/home/.config/zellij/config.yaml
+                dest: "{{ zellij_config_path }}/config.yaml"
+          tags: ["zellij"]
         - name: Neovim configuration
           block:
             - name: Ensure nvim folder is created
@@ -58,9 +65,15 @@
                 src: files/home/.config/nvim/init.lua
                 dest: $HOME/.config/nvim/init.lua
             - name: Ensure nvim packages are installed
-              shell: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'"
+              shell: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' +qa"
               register: output
               failed_when: output.rc != 0
+              changed_when: false
+            - name: Ensure treesitter is updated
+              shell: "nvim --headless +TSUpdateSync +qa"
+              register: output
+              failed_when: output.rc != 0
+              changed_when: false
         - name: Ensure bin folder is created
           file:
             path: $HOME/bin
@@ -69,11 +82,17 @@
           copy:
             src: files/home/bin/
             dest: $HOME/bin/
-          when: ansible_os_family == "ArchLinux"
-        - name: Ensure Code settings.json is created
-          copy:
-            src: files/home/.config/Code - Insiders/User/settings.json
-            dest: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User/settings.json"
+          when: ansible_os_family == "Archlinux"
+        - name: Code
+          block:
+            - name: Ensure Code directory is created
+              file:
+                path: "{{ code_config_path }}"
+                state: directory
+            - name: Ensure Code settings.json is created
+              copy:
+                src: files/home/.config/Code - Insiders/User/settings.json
+                dest: "{{ code_config_path }}/settings.json"
         - name: Ensure git config global user.name is set
           git_config:
             name: user.name
@@ -151,5 +170,14 @@
           changed_when: '"installing" in output.stdout'
           failed_when: output.rc != 0
           tags: ["rust"]
+        - name: Ensure user services are enabled
+          ansible.builtin.systemd:
+            name: "{{ item }}"
+            scope: user
+            state: started
+            enabled: yes
+          loop: "{{ user_services }}"
+          tags: ["systemd"]
+          when: ansible_os_family == "Archlinux"
       become_user: "{{ user }}"
       become: false
