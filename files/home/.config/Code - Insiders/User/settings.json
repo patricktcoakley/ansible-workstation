@@ -53,5 +53,13 @@
     "redhat.telemetry.enabled": false,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "terminal.integrated.allowChords": false
+    "terminal.integrated.allowChords": false,
+    "extensions.ignoreRecommendations": true,
+    "update.mode": "none",
+    "vim.camelCaseMotion.enable": true,
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.easymotion": true,
+    "vim.enableNeovim": true,
+    "vim.highlightedyank.enable": true,
+    "vim.useSystemClipboard": true,
 }
