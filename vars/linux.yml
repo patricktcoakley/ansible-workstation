@@ -1,5 +1,6 @@
 # Services
 user_services:
-  - syncthing.service
+- syncthing.service
 
-system_services: []
+system_services:
+- syncthing-resume.service
