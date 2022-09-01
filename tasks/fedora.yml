@@ -1,0 +1,49 @@
+---
+- name: Ensure max_paralell_downloads is max
+  ini_file:
+    path: /etc/dnf/dnf.conf
+    section: main
+    option: max_parallel_downloads
+    value: 20
+    no_extra_spaces: yes
+- name: Install and enable the free RPM Fusion repositories
+  dnf:
+    name:
+      - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ansible_distribution_major_version}}.noarch.rpm"
+      - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ansible_distribution_major_version}}.noarch.rpm"
+    state: present
+    disable_gpg_check: yes
+- name: Import RPM keys
+  rpm_key:
+    state: present
+    key: "{{ item }}"
+  loop: "{{ rpm_keys }}"
+- name: Add dnf repositories
+  copy:
+    dest: "{{ item.dest }}"
+    content: "{{ item.content }}"
+  loop: "{{ repositories }}"
+- name: Install packages
+  dnf:
+    name: "{{ packages_to_install }}"
+    state: present
+- name: Remove unwanted packages
+  dnf:
+    name: "{{ packages_to_remove }}"
+    state: absent
+- name: Upgrade all packages
+  dnf:
+    name: "*"
+    state: latest
+- name: Autoremove unneeded packages installed as dependencies
+  dnf:
+    autoremove: yes
+- name: Add flathub
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+- name: Install flatpaks
+  flatpak:
+    name: "{{ flatpaks_to_install }}"
+  tags: ["flatpak"]

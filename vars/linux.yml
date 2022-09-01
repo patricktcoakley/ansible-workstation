@@ -1,0 +1,5 @@
+# Services
+user_services:
+  - syncthing.service
+
+system_services: []

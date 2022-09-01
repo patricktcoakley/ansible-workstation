@@ -44,9 +44,3 @@ packages:
   - vlc
   - xdg-desktop-portal
   - zellij
-
-# Services
-user_services:
-  - syncthing.service
-
-system_services: []

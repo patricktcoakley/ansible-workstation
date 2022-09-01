@@ -3,16 +3,23 @@
   vars_files:
     - "vars/user.yml"
     - "vars/arch.yml"
+    - "vars/fedora.yml"
+    - "vars/linux.yml"
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
   tasks:
-    - name: Arch System configuration
+    - name: System configuration
       block:
-        - name: Ensure packages are installed
+        - name: Arch package configuration
           community.general.pacman:
             name: "{{ packages }}"
             state: present
+          when: ansible_os_family == "Archlinux"
+        - name: Fedora package configuration
+          import_tasks: tasks/fedora.yml
+          tags: ["pre-packages", "system-packages", "packages"]
+          when: ansible_os_family == "RedHat"
         - name: Ensure system services are enabled
           ansible.builtin.systemd:
             name: "{{ item }}"
@@ -22,8 +29,8 @@
           loop: "{{ system_services }}"
           tags: ["systemd"]
       become: true
-      when: ansible_os_family == "Archlinux"
-
+      when: ansible_os_family != "Darwin"
+      
     - name: User configuration
       block:
         - name: Ensure .bashrc is created
@@ -178,6 +185,6 @@
             enabled: yes
           loop: "{{ user_services }}"
           tags: ["systemd"]
-          when: ansible_os_family == "Archlinux"
+          when: ansible_os_family != "Darwin"
       become_user: "{{ user }}"
       become: false

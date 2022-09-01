@@ -1,0 +1,123 @@
+rpm_keys:
+  - https://downloads.1password.com/linux/keys/1password.asc
+  - https://packages.microsoft.com/keys/microsoft.asc
+
+repositories:
+  - dest: /etc/yum.repos.d/1password.repo
+    content: |
+      [1password]
+      name="1Password Stable Channel"
+      baseurl=https://downloads.1password.com/linux/rpm/stable/$basearch
+      enabled=1
+      gpgcheck=1
+      repo_gpgcheck=1
+      gpgkey=https://downloads.1password.com/linux/keys/1password.asc
+  - dest: /etc/yum.repos.d/vscode.repo
+    content: |
+      [code]
+      name=Visual Studio Code
+      baseurl=https://packages.microsoft.com/yumrepos/vscode
+      enabled=1
+      gpgcheck=1
+      gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+
+packages_to_install:
+  # Groups
+  - "@C Development Tools and Libraries"
+  - "@Container Management"
+  - "@Development Tools"
+  # Packages
+  - 1password
+  - alacritty
+  - ark
+  - arm-none-eabi-binutils
+  - arm-none-eabi-gcc-cs-c++
+  - arm-none-eabi-gcc-cs
+  - arm-none-eabi-newlib
+  - bash-completion
+  - blender
+  - bpftrace
+  - bzip2-devel
+  - bzip2
+  - calibre
+  - clang
+  - cmake
+  - code-insiders
+  - dotnet-sdk-6.0
+  - ffmpeg
+  - findutils
+  - fzf
+  - gamescope
+  - gcc
+  - gcc-arm-linux-gnu
+  - glfw-devel
+  - godot
+  - golang
+  - htop
+  - kate
+  - krita
+  - lldb
+  - llvm
+  - lutris
+  - mangohud
+  - neovim
+  - nmap
+  - obs-studio
+  - openssl-devel
+  - podman
+  - python3-devel
+  - qbittorrent
+  - readline-devel
+  - SDL2-devel
+  - sqlite-devel
+  - sqlite
+  - starship
+  - steam
+  - syncthing
+  - sysstat
+  - thunderbird
+  - tmux
+  - vlc
+  - xz-devel
+  - xz
+
+packages_to_remove:
+  # Groups
+  - "@LibreOffice"
+  # Packages
+  - akonadi
+  - akregator
+  - digikam
+  - dnfdragora
+  - dragon
+  - elisa-player
+  - gnome-disk-utility
+  - k3b
+  - kaddressbook
+  - kalendar
+  - kamera
+  - kamoso
+  - kfind
+  - kgpg
+  - kmag
+  - kmahjongg
+  - kmail
+  - kmines
+  - kmousetool
+  - kmouth
+  - kolourpaint
+  - kontact
+  - konversation
+  - korganizer
+  - kpat
+  - krdc
+  - krfb
+  - krusader
+  - ktorrent
+  - kwrite
+  - libreoffice*
+  - qt5-qdbusviewer
+
+flatpaks_to_install:
+  - com.spotify.Client
+  - com.discordapp.Discord
