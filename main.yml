@@ -15,12 +15,12 @@
           import_tasks: tasks/fedora.yml
           when: ansible_os_family == "RedHat"
           tags: ["fedora"]
-          # - name: macOS system configration
-          #   import_tasks: tasks/macos.yml
-          #   when: ansible_os_family == "Darwin"
-          #   tags: ["mac"]
-          #   become: false
-          #   become_user: "{{ user }}"
+        - name: macOS system configration
+          import_tasks: tasks/macos.yml
+          when: ansible_os_family == "Darwin"
+          tags: ["mac"]
+          become: false
+          become_user: "{{ user }}"
         - name: systemd
           import_tasks: tasks/systemd.yml
           when: ansible_os_family != "Darwin"

@@ -1,25 +1,39 @@
 homebrew_packages_to_install:
-  - alacritty
   - ansible
+  - bash
   - bash-completion
-  - clang
   - cmake
-  - discord
+  - curl
   - fzf
   - gcc
   - git
   - go
-  - godot
   - htop
   - llvm
+  - lua
+  - lua-language-server
+  - neovim
+  - podman
   - pyenv
+  - ripgrep
   - rustup
   - starship
-  - steam
+  - sdl2
   - stylua
   - syncthing
-  - thunderbird
   - unzip
-  - vi
-  - vlc
   - zellij
+
+homebrew_taps_to_install:
+  - homebrew/cask-versions
+
+homebrew_casks_to_install:
+  - alacritty
+  - blender
+  - discord
+  - godot
+  - racket
+  - steam
+  - thunderbird
+  - visual-studio-code-insiders
+  - vlc
