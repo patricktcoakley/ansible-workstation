@@ -1,13 +1,8 @@
 # Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+[ -f /etc/bashrc ] && source /etc/bashrc
 
 # Source user definitions
-if [ -d /usr/share/fzf ]; then
-	. /usr/share/fzf/key-bindings.bash
-	. /usr/share/fzf/completion.bash
-fi
+[ -f /usr/share/fzf/shell/key-bindings.bash ] && source /usr/share/fzf/shell/key-bindings.bash
 
 # User specific environment and startup programs
 export PYENV_ROOT="$HOME/.pyenv"

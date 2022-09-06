@@ -20,13 +20,14 @@
           #   when: ansible_os_family == "Darwin"
           #   tags: ["mac"]
           #   become: false
-          become_user: "{{ user }}"
+          #   become_user: "{{ user }}"
         - name: systemd
           import_tasks: tasks/systemd.yml
           when: ansible_os_family != "Darwin"
           tags: ["systemd"]
       tags: ["system"]
       become: true
+
     - name: User configuration
       block:
         - name: Config files

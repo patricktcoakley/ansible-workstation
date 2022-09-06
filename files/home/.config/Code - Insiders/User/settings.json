@@ -59,7 +59,5 @@
     "vim.camelCaseMotion.enable": true,
     "vim.cursorStylePerMode.insert": "line",
     "vim.easymotion": true,
-    "vim.enableNeovim": true,
     "vim.highlightedyank.enable": true,
-    "vim.useSystemClipboard": true,
 }
