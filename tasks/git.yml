@@ -1,0 +1,16 @@
+---
+- name: Ensure git config global user.name is set
+  git_config:
+    name: user.name
+    scope: global
+    value: "{{ git_name }}"
+- name: Ensure git config global user.email is set
+  git_config:
+    name: user.email
+    scope: global
+    value: "{{ git_email }}"
+- name: Ensure git config editor is set
+  git_config:
+    name: core.editor
+    scope: global
+    value: "{{ editor }}"

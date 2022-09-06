@@ -2,189 +2,54 @@
 - hosts: localhost
   vars_files:
     - "vars/user.yml"
-    - "vars/arch.yml"
     - "vars/fedora.yml"
     - "vars/linux.yml"
+    - "vars/macos.yml"
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
   tasks:
     - name: System configuration
       block:
-        - name: Arch package configuration
-          community.general.pacman:
-            name: "{{ packages }}"
-            state: present
-          when: ansible_os_family == "Archlinux"
-        - name: Fedora package configuration
+        - name: Fedora system configuration
           import_tasks: tasks/fedora.yml
-          tags: ["pre-packages", "system-packages", "packages"]
           when: ansible_os_family == "RedHat"
-        - name: Ensure system services are enabled
-          ansible.builtin.systemd:
-            name: "{{ item }}"
-            scope: system
-            state: started
-            enabled: yes
-          loop: "{{ system_services }}"
+          tags: ["fedora"]
+          # - name: macOS system configration
+          #   import_tasks: tasks/macos.yml
+          #   when: ansible_os_family == "Darwin"
+          #   tags: ["mac"]
+          #   become: false
+          become_user: "{{ user }}"
+        - name: systemd
+          import_tasks: tasks/systemd.yml
+          when: ansible_os_family != "Darwin"
           tags: ["systemd"]
+      tags: ["system"]
       become: true
-      when: ansible_os_family != "Darwin"
-      
     - name: User configuration
       block:
-        - name: Ensure .bashrc is created
-          copy:
-            src: files/home/.bashrc
-            dest: $HOME/.bashrc
-        - name: Ensure .bash_profile is created
-          copy:
-            src: files/home/.bash_profile
-            dest: $HOME/.bash_profile
-        - name: Ensure starship.toml is created
-          copy:
-            src: files/home/.config/starship.toml
-            dest: $HOME/.config/starship.toml
-        - name: Ensure alacritty.yml is created
-          copy:
-            src: files/home/.config/alacritty.yml
-            dest: $HOME/.config/alacritty.yml
-          tags: ["alacritty"]
-        - name: Zellij configuration
-          block:
-            - name: Ensure zellij folder is created
-              file:
-                path: "{{ zellij_config_path }}"
-                state: directory
-            - name: Ensure zellij config is created
-              copy:
-                src: files/home/.config/zellij/config.yaml
-                dest: "{{ zellij_config_path }}/config.yaml"
-          tags: ["zellij"]
-        - name: Neovim configuration
-          block:
-            - name: Ensure nvim folder is created
-              file:
-                path: $HOME/.config/nvim
-                state: directory
-            - name: Ensure init.lua is copied
-              copy:
-                src: files/home/.config/nvim/init.lua
-                dest: $HOME/.config/nvim/init.lua
-            - name: Ensure nvim packages are installed
-              shell: "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' +qa"
-              register: output
-              failed_when: output.rc != 0
-              changed_when: false
-            - name: Ensure treesitter is updated
-              shell: "nvim --headless +TSUpdateSync +qa"
-              register: output
-              failed_when: output.rc != 0
-              changed_when: false
-        - name: Ensure bin folder is created
-          file:
-            path: $HOME/bin
-            state: directory
-        - name: Ensure bin folder is copied
-          copy:
-            src: files/home/bin/
-            dest: $HOME/bin/
-          when: ansible_os_family == "Archlinux"
+        - name: Config files
+          import_tasks: tasks/config.yml
+          tags: ["config"]
+        - name: Fonts
+          import_tasks: tasks/fonts.yml
+          tags: ["fonts"]
+        - name: Git
+          import_tasks: tasks/git.yml
+          tags: ["git"]
+        - name: Neovim
+          import_tasks: tasks/neovim.yml
+          tags: ["neovim"]
+        - name: rustup
+          import_tasks: tasks/rustup.yml
+          tags: ["rustup"]
+        - name: pyenv
+          import_tasks: tasks/pyenv.yml
+          tags: ["pyenv"]
         - name: Code
-          block:
-            - name: Ensure Code directory is created
-              file:
-                path: "{{ code_config_path }}"
-                state: directory
-            - name: Ensure Code settings.json is created
-              copy:
-                src: files/home/.config/Code - Insiders/User/settings.json
-                dest: "{{ code_config_path }}/settings.json"
-        - name: Ensure git config global user.name is set
-          git_config:
-            name: user.name
-            scope: global
-            value: "{{ git_name }}"
-        - name: Ensure git config global user.email is set
-          git_config:
-            name: user.email
-            scope: global
-            value: "{{ git_email }}"
-        - name: Ensure git config editor is set
-          git_config:
-            name: core.editor
-            scope: global
-            value: "{{ editor }}"
-        - name: Check if fonts are installed
-          ansible.builtin.find:
-            paths: $HOME/.local/share/fonts
-            patterns: "*.ttf"
-            recurse: yes
-          register: fonts_installed
-        - name: Font Installation
-          block:
-            - name: Ensure fonts folders exists
-              file:
-                path: "$HOME/.local/share/fonts/{{ item }}"
-                state: directory
-              loop: "{{ fonts_to_install.keys() }}"
-            - name: Download extra fonts
-              unarchive:
-                src: "{{ item.value }}"
-                dest: "$HOME/.local/share/fonts/{{ item.key }}"
-                creates: "~/.local/share/fonts/{{ item.key }}/*.ttf"
-                remote_src: yes
-              loop: "{{ fonts_to_install | dict2items }}"
-            - name: Run fc-cache
-              command: fc-cache
-              register: output
-              failed_when: output.rc != 0
-              changed_when: '"caching, new cache contents" in output.stdout'
-          when: fonts_installed.matched == 0
-        - name: Ensure provided Code extensions are installed
-          block:
-            - name: Get installed extensions
-              shell: "code-insiders --list-extensions"
-              register: installed_extensions
-              changed_when: false
-            - name: Uninstall existing extensions
-              shell: "code-insiders --list-extensions | xargs -n1 code-insiders --uninstall-extension"
-              when: "code_extensions_to_install != installed_extensions.stdout_lines"
-            - name: Code extensions installation
-              shell: "code-insiders --install-extension {{ item }}"
-              loop: "{{ code_extensions_to_install }}"
-              register: output
-              failed_when: output.rc != 0
-              changed_when: '"already installed" not in output.stdout'
-              when: "code_extensions_to_install != installed_extensions.stdout_lines"
+          import_tasks: tasks/code.yml
           tags: ["code"]
-        - name: Python installation via pyenv
-          block:
-            - name: Ensure selected version of Python is installed with pyenv
-              shell: "pyenv install {{ python_to_install }} -s && pyenv global {{ python_to_install }}"
-              register: output
-              changed_when: '"Installed" in output'
-              failed_when: output.rc != 0
-            - name: Ensure Python packages are installed to global pyenv
-              shell: 'pip install {{ python_packages_to_install | join(" ") }}'
-              register: output
-              failed_when: output.rc != 0
-              changed_when: '"Requirement already satisfied" not in output.stdout'
-          tags: ["python"]
-        - name: Ensure Rust stable channel is installed via rustup
-          shell: "rustup install {{ rust_to_install }}"
-          register: output
-          changed_when: '"installing" in output.stdout'
-          failed_when: output.rc != 0
-          tags: ["rust"]
-        - name: Ensure user services are enabled
-          ansible.builtin.systemd:
-            name: "{{ item }}"
-            scope: user
-            state: started
-            enabled: yes
-          loop: "{{ user_services }}"
-          tags: ["systemd"]
-          when: ansible_os_family != "Darwin"
-      become_user: "{{ user }}"
+      tags: ["user"]
       become: false
+      become_user: "{{ user }}"

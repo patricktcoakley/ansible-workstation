@@ -1,0 +1,28 @@
+---
+- name: Code
+  block:
+    - name: Ensure Code directory is created
+      file:
+        path: "{{ code_config_path }}"
+        state: directory
+    - name: Ensure Code settings.json is created
+      copy:
+        src: files/home/.config/Code - Insiders/User/settings.json
+        dest: "{{ code_config_path }}/settings.json"
+- name: Ensure provided Code extensions are installed
+  block:
+    - name: Get installed extensions
+      shell: "code-insiders --list-extensions"
+      register: installed_extensions
+      changed_when: false
+    - name: Uninstall existing extensions
+      shell: "code-insiders --list-extensions | xargs -n1 code-insiders --uninstall-extension"
+      when: "code_extensions_to_install != installed_extensions.stdout_lines"
+    - name: Code extensions installation
+      shell: "code-insiders --install-extension {{ item }}"
+      loop: "{{ code_extensions_to_install }}"
+      register: output
+      failed_when: output.rc != 0
+      changed_when: '"already installed" not in output.stdout'
+      when: "code_extensions_to_install != installed_extensions.stdout_lines"
+  tags: ["code"]

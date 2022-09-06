@@ -1,0 +1,4 @@
+---
+- community.general.homebrew:
+    name: "{{ homebrew_packages_to_install }}"
+    state: installed

@@ -1,4 +1,4 @@
-packages:
+homebrew_packages_to_install:
   - alacritty
   - ansible
   - bash-completion

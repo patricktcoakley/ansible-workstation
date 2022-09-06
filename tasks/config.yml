@@ -1,0 +1,33 @@
+---
+- name: Ensure .bashrc is created
+  copy:
+    src: files/home/.bashrc
+    dest: $HOME/.bashrc
+- name: Ensure .bash_profile is created
+  copy:
+    src: files/home/.bash_profile
+    dest: $HOME/.bash_profile
+- name: Ensure starship.toml is created
+  copy:
+    src: files/home/.config/starship.toml
+    dest: $HOME/.config/starship.toml
+- name: Ensure alacritty.yml is created
+  copy:
+    src: files/home/.config/alacritty.yml
+    dest: $HOME/.config/alacritty.yml
+  tags: ["alacritty"]
+- name: Zellij configuration
+  block:
+    - name: Ensure zellij folder is created
+      file:
+        path: "{{ zellij_config_path }}"
+        state: directory
+    - name: Ensure zellij config is created
+      copy:
+        src: files/home/.config/zellij/config.yaml
+        dest: "{{ zellij_config_path }}/config.yaml"
+  tags: ["zellij"]
+- name: Ensure bin folder is created
+  file:
+    path: $HOME/bin
+    state: directory

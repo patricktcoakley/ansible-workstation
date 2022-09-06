@@ -1,0 +1,27 @@
+---
+- name: Skip if fonts are installed
+  ansible.builtin.find:
+    paths: $HOME/.local/share/fonts
+    patterns: "*.ttf"
+    recurse: yes
+  register: fonts_installed
+- name: Fonts
+  block:
+    - name: Ensure fonts folders exists
+      file:
+        path: "$HOME/.local/share/fonts/{{ item }}"
+        state: directory
+      loop: "{{ fonts_to_install.keys() }}"
+    - name: Download extra fonts
+      unarchive:
+        src: "{{ item.value }}"
+        dest: "$HOME/.local/share/fonts/{{ item.key }}"
+        creates: "~/.local/share/fonts/{{ item.key }}/*.ttf"
+        remote_src: yes
+      loop: "{{ fonts_to_install | dict2items }}"
+    - name: Run fc-cache
+      command: fc-cache
+      register: output
+      failed_when: output.rc != 0
+      changed_when: '"caching, new cache contents" in output.stdout'
+  when: fonts_installed.matched == 0

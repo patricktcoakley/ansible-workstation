@@ -1,0 +1,19 @@
+---
+- name: Ensure system services are enabled
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    scope: system
+    state: started
+    enabled: yes
+  loop: "{{ system_services }}"
+  tags: ["systemd"]
+  become: true
+- name: Ensure user services are enabled
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    scope: user
+    state: started
+    enabled: yes
+  loop: "{{ user_services }}"
+  tags: ["systemd"]
+  become_user: "{{ user }}"

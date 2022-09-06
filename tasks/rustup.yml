@@ -1,0 +1,25 @@
+---
+- name: rustup
+  block:
+    - name: Skip if rustup is installed
+      shell: rustup -V
+      args:
+        executable: /bin/bash
+      register: rustup_installed
+      changed_when: false
+      failed_when: false
+    - name: rustup installation
+      block:
+        - name: Download rustup
+          uri:
+            url: https://sh.rustup.rs
+            return_content: yes
+          register: rustup_installer
+        - name: Run rustup installer
+          shell:
+            cmd: sh -s -- -y
+            stdin: "{{ rustup_installer.content }}"
+          register: output
+          changed_when: '"Rust is installed now" in output.stdout'
+          failed_when: output.rc != 0
+      when: "rustup_installed.rc != 0"
