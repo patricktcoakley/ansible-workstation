@@ -29,16 +29,17 @@ packages_to_install:
   # Packages
   - 1password
   - alacritty
+  - alsa-lib-devel
   - ark
   - arm-none-eabi-binutils
-  - arm-none-eabi-gcc-cs-c++
   - arm-none-eabi-gcc-cs
+  - arm-none-eabi-gcc-cs-c++
   - arm-none-eabi-newlib
   - bash-completion
   - blender
   - bpftrace
-  - bzip2-devel
   - bzip2
+  - bzip2-devel
   - calibre
   - clang
   - cmake
@@ -57,21 +58,33 @@ packages_to_install:
   - kate
   - krita
   - ksysguard
+  - libX11-devel
+  - libXcursor-devel
+  - libXi-devel
+  - libXinerama-devel
+  - libxkbcommon-x11-devel
+  - libXrandr-devel
+  - libXxf86vm-devel
   - lldb
   - llvm
   - lutris
   - mangohud
+  - mesa-libEGL-devel
+  - mesa-libGL-devel
+  - mesa-libGLES-devel
+  - mesa-libGLU-devel
   - neovim
   - nmap
   - obs-studio
   - openssl-devel
+  - pkg-config
   - podman
   - python3-devel
   - qbittorrent
   - readline-devel
   - SDL2-devel
-  - sqlite-devel
   - sqlite
+  - sqlite-devel
   - starship
   - steam
   - syncthing
@@ -79,8 +92,10 @@ packages_to_install:
   - thunderbird
   - tmux
   - vlc
-  - xz-devel
+  - vulkan-headers
+  - wayland-devel
   - xz
+  - xz-devel
 
 packages_to_remove:
   # Groups

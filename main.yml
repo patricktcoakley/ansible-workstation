@@ -30,9 +30,6 @@
 
     - name: User configuration
       block:
-        - name: Config files
-          import_tasks: tasks/config.yml
-          tags: ["config"]
         - name: Fonts
           import_tasks: tasks/fonts.yml
           tags: ["fonts"]
@@ -51,6 +48,9 @@
         - name: Code
           import_tasks: tasks/code.yml
           tags: ["code"]
+        - name: Config files
+          import_tasks: tasks/config.yml
+          tags: ["config"]
       tags: ["user"]
       become: false
       become_user: "{{ user }}"
