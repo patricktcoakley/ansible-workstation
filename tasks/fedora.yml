@@ -38,12 +38,3 @@
 - name: Autoremove unneeded packages installed as dependencies
   dnf:
     autoremove: yes
-- name: Add flathub
-  flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-- name: Install flatpaks
-  flatpak:
-    name: "{{ flatpaks_to_install }}"
-  tags: ["flatpak"]

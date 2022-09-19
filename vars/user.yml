@@ -18,14 +18,11 @@ rust_to_install: stable
 code_extensions_to_install:
   - bungcip.better-toml
   - cargo-inspect-vscode.cargo-inspect
-  - cschlosser.doxdocgen
   - Dart-Code.dart-code
   - Dart-Code.flutter
   - dbaeumer.vscode-eslint
-  - eamodio.gitlens
   - golang.go-nightly
   - Gruntfuggly.todo-tree
-  - hashicorp.terraform
   - jeff-hykin.better-cpp-syntax
   - ms-azuretools.vscode-docker
   - ms-dotnettools.csharp

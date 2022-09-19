@@ -15,6 +15,10 @@
           import_tasks: tasks/fedora.yml
           when: ansible_os_family == "RedHat"
           tags: ["fedora"]
+        - name: Flatpak installation
+          import_tasks: tasks/flatpak.yml
+          when: ansible_system == "Linux"
+          tags: ["flatpak"]
         - name: macOS system configration
           import_tasks: tasks/macos.yml
           when: ansible_os_family == "Darwin"
@@ -23,7 +27,7 @@
           become_user: "{{ user }}"
         - name: systemd
           import_tasks: tasks/systemd.yml
-          when: ansible_os_family != "Darwin"
+          when: ansible_system == "Linux" 
           tags: ["systemd"]
       tags: ["system"]
       become: true

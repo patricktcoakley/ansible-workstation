@@ -1,0 +1,14 @@
+---
+- name: Add flathub
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+- name: Install flatpaks
+  flatpak:
+    name: "{{ flatpaks_to_install }}"
+- name: Update flatpaks
+  command: "flatpak update --noninteractive"
+  register: output
+  failed_when: output.rc != 0
+  changed_when: output.stdout != "Nothing to do."
