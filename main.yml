@@ -2,19 +2,21 @@
 - hosts: localhost
   vars_files:
     - "vars/user.yml"
-    - "vars/fedora.yml"
     - "vars/linux.yml"
     - "vars/macos.yml"
+    - "vars/redhat.yml"
+    - "vars/flatpak.yml"
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
+    redhat_platform: "$HOME/{{ansible_facts['distribution'] == 'Fedora' | ternary('fedora', 'el') }}"
   tasks:
     - name: System configuration
       block:
         - name: Fedora system configuration
-          import_tasks: tasks/fedora.yml
+          import_tasks: tasks/redhat.yml
           when: ansible_os_family == "RedHat"
-          tags: ["fedora"]
+          tags: ["fedora", "rocky"]
         - name: Flatpak installation
           import_tasks: tasks/flatpak.yml
           when: ansible_system == "Linux"

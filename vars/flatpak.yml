@@ -1,0 +1,3 @@
+flatpaks_to_install:
+  - com.spotify.Client
+  - com.discordapp.Discord

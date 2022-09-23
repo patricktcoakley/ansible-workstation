@@ -133,7 +133,3 @@ packages_to_remove:
   - kwrite
   - libreoffice*
   - qt5-qdbusviewer
-
-flatpaks_to_install:
-  - com.spotify.Client
-  - com.discordapp.Discord
