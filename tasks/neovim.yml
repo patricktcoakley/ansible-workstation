@@ -12,8 +12,3 @@
   register: output
   failed_when: output.rc != 0
   changed_when: false
-- name: Ensure treesitter is updated
-  shell: "nvim --headless +TSUpdateSync +qa"
-  register: output
-  failed_when: output.rc != 0
-  changed_when: false

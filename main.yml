@@ -9,7 +9,7 @@
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
-    redhat_platform: "$HOME/{{ansible_facts['distribution'] == 'Fedora' | ternary('fedora', 'el') }}"
+    redhat_platform: "{{(ansible_facts['distribution'] == 'Fedora') | ternary('fedora', 'el') }}"
   tasks:
     - name: System configuration
       block:
