@@ -23,32 +23,3 @@
           changed_when: '"Rust is installed now" in output.stdout'
           failed_when: output.rc != 0
       when: "rustup_installed.rc != 0"
-- name: Install Rust packages if on RedHat
-  block:
-    - name: Install cargo packages
-      shell: cargo install zellij alacritty ripgrep starship skim
-      register: output
-      failed_when: output.rc != 0
-    - name: Ensure applications folder is created
-      file:
-        path: $HOME/.local/share/applications
-        state: directory
-    - name: Ensure pixmaps folder is created
-      file:
-        path: $HOME/.local/share/pixmaps
-        state: directory
-    - name: Ensure Alacritty desktop file is copied
-      copy:
-        src: "files/home/.local/share/applications/Alacritty.desktop"
-        dest: "$HOME/.local/share/applications/Alacritty.desktop"
-    - name: Ensure Alacritty icon is copied
-      copy:
-        src: "files/home/.local/share/pixmaps/Alacritty.svg"
-        dest: "$HOME/.local/share/pixmaps/Alacritty.svg"
-    - name: Update desktop database
-      shell:
-        cmd: update-desktop-database ~/.local/share/applications
-      register: output
-      failed_when: output.rc != 0
-  when: ansible_os_family == "RedHat"
-  tags: ["alacritty"]

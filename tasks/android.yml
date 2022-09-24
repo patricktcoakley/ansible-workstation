@@ -12,13 +12,9 @@
         remote_src: yes
       when: not studio_installed.stat.exists
     - name: Ensure desktop entry is created
-      copy:
-        src: "files/home/.local/share/applications/AndroidStudio.desktop"
-        dest: "$HOME/.local/share/applications/AndroidStudio.desktop"
-    - name: Ensure desktop icon is copied
-      copy:
-        src: "files/home/.local/share/pixmaps/AndroidStudio.svg"
-        dest: "$HOME/.local/share/pixmaps/AndroidStudio.svg"
+      template:
+        src: templates/jetbrains-studio.desktop.j2
+        dest: "$HOME/.local/share/applications/jetbrains-studio.desktop"
     - name: Update desktop database
       shell:
         cmd: update-desktop-database ~/.local/share/applications

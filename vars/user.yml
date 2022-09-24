@@ -13,7 +13,6 @@ fzf_to_install: https://github.com/junegunn/fzf/releases/download/0.33.0/fzf-0.3
 python_to_install: 3.10.6
 python_packages_to_install:
   - ipython
-  - pygame
   - autopep8
   - mkdocs
 rust_to_install: stable

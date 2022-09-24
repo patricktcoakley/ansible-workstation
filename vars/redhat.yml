@@ -38,10 +38,12 @@ packages_to_install:
   - freetype-devel
   - gcc
   - glfw-devel
+  - godot
   - golang
   - gtk3-devel
   - htop
   - java-11-openjdk-devel
+  - kate
   - libxcb-devel
   - libxkbcommon-devel
   - xcb-util-devel
@@ -69,6 +71,7 @@ packages_to_install:
   - SDL2-devel
   - sqlite
   - sqlite-devel
+  - steam
   - syncthing
   - sysstat
   - thunderbird
@@ -81,10 +84,18 @@ packages_to_install:
 packages_to_remove:
   - akonadi
   - akregator
+  - cheese
   - digikam
   - dnfdragora
   - dragon
   - elisa-player
+  - gnome-calendar
+  - gnome-contacts
+  - gnome-maps
+  - gnome-photos
+  - gnome-text-editor
+  - gnome-tour
+  - gnome-weather
   - juk
   - k3b
   - kaddressbook
@@ -113,3 +124,5 @@ packages_to_remove:
   - kwrite
   - libreoffice*
   - qt5-qdbusviewer
+  - rhythmbox
+  - totem

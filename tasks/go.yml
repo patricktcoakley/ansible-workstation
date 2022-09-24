@@ -1,7 +1,12 @@
 ---
+- name: Check installed version of Go
+  shell:
+    cmd: go version
+  register: output
+  changed_when: False
 - name: Install Go
   shell:
-    cmd: "go install golang.org/dl/go{{go_to_install}}@latest && go{{go_to_install}} download"
+    cmd: "go install golang.org/dl/go{{go_to_install}}@latest && $HOME/go/bin/go{{go_to_install}} download"
   register: output
   failed_when: output.rc != 0
-  tags: ["go"]
+  when: go_to_install not in output.stdout

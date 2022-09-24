@@ -57,6 +57,12 @@
         - name: Flutter
           import_tasks: tasks/flutter.yml
           tags: ["flutter"]
+        - name: Config files
+          import_tasks: tasks/config.yml
+          tags: ["config"]
+        - name: Terminal
+          import_tasks: tasks/terminal.yml
+          tags: ["terminal"]
         - name: Android Studio
           import_tasks: tasks/android.yml
           tags: ["android"]
@@ -64,9 +70,6 @@
         - name: Code
           import_tasks: tasks/code.yml
           tags: ["code"]
-        - name: Config files
-          import_tasks: tasks/config.yml
-          tags: ["config"]
       tags: ["user"]
       become: false
       become_user: "{{ user }}"

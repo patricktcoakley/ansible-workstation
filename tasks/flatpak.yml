@@ -7,6 +7,7 @@
 - name: Install flatpaks
   flatpak:
     name: "{{ flatpaks_to_install }}"
+    remote: flathub
 - name: Update flatpaks
   command: "flatpak update --noninteractive"
   register: output
