@@ -3,3 +3,4 @@ flatpaks_to_install:
   - com.discordapp.Discord
   - com.obsproject.Studio
   - org.kde.krita
+  - org.godotengine.Godot

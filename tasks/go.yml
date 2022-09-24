@@ -1,0 +1,7 @@
+---
+- name: Install Go
+  shell:
+    cmd: "go install golang.org/dl/go{{go_to_install}}@latest && go{{go_to_install}} download"
+  register: output
+  failed_when: output.rc != 0
+  tags: ["go"]

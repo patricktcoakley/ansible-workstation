@@ -2,8 +2,9 @@
 [ -f /etc/bashrc ] && source /etc/bashrc
 
 # Source user definitions
-[ -f /usr/share/fzf/shell/key-bindings.bash ] && source /usr/share/fzf/shell/key-bindings.bash
 [ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env"
+[ -f $HOME/.config/skim/completion.bash ] && source "$HOME/.config/skim/completion.bash"
+[ -f $HOME/.config/skim/key-bindings.bash ] && source "$HOME/.config/skim/key-bindings.bash"
 [ -d /opt/homebrew ] && export PATH="/opt/homebrew/bin:$PATH"
 
 # User specific environment and startup programs
@@ -19,6 +20,7 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$HOME/flutter/bin:$PATH"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Aliases
 alias code="code-insiders"

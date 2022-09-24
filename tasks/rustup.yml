@@ -26,7 +26,7 @@
 - name: Install Rust packages if on RedHat
   block:
     - name: Install cargo packages
-      shell: cargo install --locked zellij alacritty ripgrep starship
+      shell: cargo install zellij alacritty ripgrep starship skim
       register: output
       failed_when: output.rc != 0
     - name: Ensure applications folder is created

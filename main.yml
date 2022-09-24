@@ -51,6 +51,12 @@
         - name: pyenv
           import_tasks: tasks/pyenv.yml
           tags: ["pyenv"]
+        - name: Go
+          import_tasks: tasks/go.yml
+          tags: ["go"]
+        - name: Flutter
+          import_tasks: tasks/flutter.yml
+          tags: ["flutter"]
         - name: Code
           import_tasks: tasks/code.yml
           tags: ["code"]
