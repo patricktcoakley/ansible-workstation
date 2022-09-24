@@ -24,7 +24,6 @@ repositories:
 packages_to_install:
   - 1password
   - alsa-lib-devel
-  - ark
   - bash-completion
   - bpftrace
   - bzip2
@@ -43,8 +42,6 @@ packages_to_install:
   - gtk3-devel
   - htop
   - java-11-openjdk-devel
-  - kate
-  - ksysguard
   - libxcb-devel
   - libxkbcommon-devel
   - xcb-util-devel
@@ -75,7 +72,6 @@ packages_to_install:
   - syncthing
   - sysstat
   - thunderbird
-  - tmux
   - vlc
   - vulkan-headers
   - wayland-devel
@@ -89,7 +85,6 @@ packages_to_remove:
   - dnfdragora
   - dragon
   - elisa-player
-  - gnome-disk-utility
   - juk
   - k3b
   - kaddressbook
