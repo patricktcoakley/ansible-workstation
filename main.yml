@@ -57,6 +57,10 @@
         - name: Flutter
           import_tasks: tasks/flutter.yml
           tags: ["flutter"]
+        - name: Android Studio
+          import_tasks: tasks/android.yml
+          tags: ["android"]
+          when: ansible_system == "Linux"
         - name: Code
           import_tasks: tasks/code.yml
           tags: ["code"]

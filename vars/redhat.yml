@@ -41,6 +41,7 @@ packages_to_install:
   - glfw-devel
   - golang
   - htop
+  - java-11-openjdk-devel
   - kate
   - ksysguard
   - libxcb-devel
