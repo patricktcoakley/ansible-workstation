@@ -40,6 +40,7 @@ packages_to_install:
   - gcc
   - glfw-devel
   - golang
+  - gtk3-devel
   - htop
   - java-11-openjdk-devel
   - kate
@@ -61,6 +62,7 @@ packages_to_install:
   - mesa-libGLES-devel
   - mesa-libGLU-devel
   - neovim
+  - ninja-build
   - nmap
   - openssl-devel
   - pkg-config

@@ -17,7 +17,7 @@
         dest: "$HOME/.local/share/applications/AndroidStudio.desktop"
     - name: Ensure desktop icon is copied
       copy:
-        src: "~/android-studio/bin/studio.svg"
+        src: "files/home/.local/share/pixmaps/AndroidStudio.svg"
         dest: "$HOME/.local/share/pixmaps/AndroidStudio.svg"
     - name: Update desktop database
       shell:
