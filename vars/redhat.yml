@@ -35,12 +35,17 @@ packages_to_install:
   - dotnet-sdk-6.0
   - ffmpeg
   - findutils
+  - fontconfig-devel
+  - freetype-devel
   - gcc
   - glfw-devel
   - golang
   - htop
   - kate
   - ksysguard
+  - libxcb-devel
+  - libxkbcommon-devel
+  - xcb-util-devel
   - libX11-devel
   - libXcursor-devel
   - libXi-devel
@@ -87,6 +92,7 @@ packages_to_remove:
   - kalendar
   - kamera
   - kamoso
+  - kdeconnect
   - kfind
   - kgpg
   - kmag
