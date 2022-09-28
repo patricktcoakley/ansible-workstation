@@ -22,42 +22,31 @@ repositories:
       gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 
 packages_to_install:
-  # Groups
-  - "@C Development Tools and Libraries"
-  - "@Container Management"
-  - "@Development Tools"
-  # Packages
   - 1password
-  - alacritty
   - alsa-lib-devel
-  - ark
-  - arm-none-eabi-binutils
-  - arm-none-eabi-gcc-cs
-  - arm-none-eabi-gcc-cs-c++
-  - arm-none-eabi-newlib
   - bash-completion
-  - blender
   - bpftrace
   - bzip2
   - bzip2-devel
-  - calibre
   - clang
   - cmake
   - code-insiders
   - dotnet-sdk-6.0
   - ffmpeg
   - findutils
-  - fzf
-  - gamescope
+  - fontconfig-devel
+  - freetype-devel
   - gcc
-  - gcc-arm-linux-gnu
   - glfw-devel
   - godot
   - golang
+  - gtk3-devel
   - htop
+  - java-11-openjdk-devel
   - kate
-  - krita
-  - ksysguard
+  - libxcb-devel
+  - libxkbcommon-devel
+  - xcb-util-devel
   - libX11-devel
   - libXcursor-devel
   - libXi-devel
@@ -67,30 +56,25 @@ packages_to_install:
   - libXxf86vm-devel
   - lldb
   - llvm
-  - lutris
-  - mangohud
   - mesa-libEGL-devel
   - mesa-libGL-devel
   - mesa-libGLES-devel
   - mesa-libGLU-devel
   - neovim
+  - ninja-build
   - nmap
-  - obs-studio
   - openssl-devel
   - pkg-config
   - podman
   - python3-devel
-  - qbittorrent
   - readline-devel
   - SDL2-devel
   - sqlite
   - sqlite-devel
-  - starship
   - steam
   - syncthing
   - sysstat
   - thunderbird
-  - tmux
   - vlc
   - vulkan-headers
   - wayland-devel
@@ -98,21 +82,27 @@ packages_to_install:
   - xz-devel
 
 packages_to_remove:
-  # Groups
-  - "@LibreOffice"
-  # Packages
   - akonadi
   - akregator
+  - cheese
   - digikam
   - dnfdragora
   - dragon
   - elisa-player
-  - gnome-disk-utility
+  - gnome-calendar
+  - gnome-contacts
+  - gnome-maps
+  - gnome-photos
+  - gnome-text-editor
+  - gnome-tour
+  - gnome-weather
+  - juk
   - k3b
   - kaddressbook
   - kalendar
   - kamera
   - kamoso
+  - kde-connect
   - kfind
   - kgpg
   - kmag
@@ -128,12 +118,11 @@ packages_to_remove:
   - kpat
   - krdc
   - krfb
+  - kruler
   - krusader
   - ktorrent
   - kwrite
   - libreoffice*
   - qt5-qdbusviewer
-
-flatpaks_to_install:
-  - com.spotify.Client
-  - com.discordapp.Discord
+  - rhythmbox
+  - totem

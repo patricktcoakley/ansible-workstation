@@ -27,7 +27,26 @@
         src: files/home/.config/zellij/config.yaml
         dest: "{{ zellij_config_path }}/config.yaml"
   tags: ["zellij"]
-- name: Ensure bin folder is created
+- name: Skim configuration
+  block:
+    - name: Ensure skim folder is created
+      file:
+        path: "$HOME/.config/skim/"
+        state: directory
+    - name: Ensure completion is copied
+      copy:
+        src: files/home/.config/skim/completion.bash
+        dest: $HOME/.config/skim/completion.bash
+    - name: Ensure key-bindings is copied
+      copy:
+        src: files/home/.config/skim/key-bindings.bash
+        dest: $HOME/.config/skim/key-bindings.bash
+  tags: ["skim"]
+- name: Ensure bash completions folder is created
   file:
-    path: $HOME/bin
+    path: $HOME/.local/share/bash-completion/completions
+    state: directory
+- name: Ensure ~/.local/bin is created
+  file:
+    path: $HOME/.local/bin
     state: directory

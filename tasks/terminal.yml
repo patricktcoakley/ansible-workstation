@@ -1,0 +1,29 @@
+---
+- name: Install terminal packages
+  block:
+    - name: Install cargo packages
+      shell: $HOME/.cargo/bin/cargo install zellij alacritty ripgrep starship skim
+      register: output
+      failed_when: output.rc != 0
+    - name: Ensure applications folder is created
+      file:
+        path: $HOME/.local/share/applications
+        state: directory
+    - name: Ensure pixmaps folder is created
+      file:
+        path: $HOME/.local/share/pixmaps
+        state: directory
+    - name: Ensure Alacritty desktop file is copied
+      template:
+        src: "templates/Alacritty.desktop.j2"
+        dest: "$HOME/.local/share/applications/Alacritty.desktop"
+    - name: Ensure Alacritty icon is copied
+      copy:
+        src: "files/home/.local/share/pixmaps/Alacritty.svg"
+        dest: "$HOME/.local/share/pixmaps/Alacritty.svg"
+    - name: Update desktop database
+      shell:
+        cmd: update-desktop-database ~/.local/share/applications
+      register: output
+      failed_when: output.rc != 0
+  tags: ["terminal"]
