@@ -1,0 +1,25 @@
+---
+- name: Import keys
+  shell:
+    cmd: "curl -sS {{ item.value }} | sudo gpg --dearmor --output /usr/share/keyrings/{{ item.key }}.gpg"
+  loop: "{{ apt_keys | dict2items }}"
+- name: Add repositories
+  apt_repository:
+    repo: "{{ item.value }}"
+    state: present
+    filename: "{{ item.key }}"
+  loop: "{{ apt_repositories | dict2items }}"
+- name: Install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ apt_packages_to_install }}"
+- name: Remove packages
+  apt:
+    name: "{{ item }}"
+    state: absent
+  loop: "{{ apt_packages_to_remove }}"
+- name: Update all packages to their latest version
+  ansible.builtin.apt:
+    name: "*"
+    state: latest

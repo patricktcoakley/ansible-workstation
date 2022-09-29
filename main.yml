@@ -13,20 +13,24 @@
   tasks:
     - name: System configuration
       block:
-        - name: Fedora system configuration
+        - name: RedHat system configuration
           import_tasks: tasks/redhat.yml
           when: ansible_os_family == "RedHat"
           tags: ["fedora", "rocky"]
-        - name: Flatpak installation
-          import_tasks: tasks/flatpak.yml
-          when: ansible_system == "Linux"
-          tags: ["flatpak"]
+        - name: Debian system configuration
+          import_tasks: tasks/debian.yml
+          when: ansible_os_family == "Debian"
+          tags: ["ubuntu", "debian", "pop"]
         - name: macOS system configration
           import_tasks: tasks/macos.yml
           when: ansible_os_family == "Darwin"
           tags: ["mac"]
           become: false
           become_user: "{{ user }}"
+        - name: Flatpak installation
+          import_tasks: tasks/flatpak.yml
+          when: ansible_os_family == "RedHat"
+          tags: ["flatpak"]
         - name: systemd
           import_tasks: tasks/systemd.yml
           when: ansible_system == "Linux" 

@@ -2,7 +2,7 @@ rpm_keys:
   - https://downloads.1password.com/linux/keys/1password.asc
   - https://packages.microsoft.com/keys/microsoft.asc
 
-repositories:
+dnf_repositories:
   - dest: /etc/yum.repos.d/1password.repo
     content: |
       [1password]
@@ -21,7 +21,7 @@ repositories:
       gpgcheck=1
       gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 
-packages_to_install:
+dnf_packages_to_install:
   - 1password
   - alsa-lib-devel
   - bash-completion
@@ -81,7 +81,7 @@ packages_to_install:
   - xz
   - xz-devel
 
-packages_to_remove:
+dnf_packages_to_remove:
   - akonadi
   - akregator
   - cheese
