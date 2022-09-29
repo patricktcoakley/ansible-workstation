@@ -6,6 +6,7 @@
     - "vars/macos.yml"
     - "vars/redhat.yml"
     - "vars/flatpak.yml"
+    - "vars/debian.yml"
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
@@ -52,9 +53,6 @@
         - name: rustup
           import_tasks: tasks/rustup.yml
           tags: ["rustup"]
-        - name: pyenv
-          import_tasks: tasks/pyenv.yml
-          tags: ["pyenv"]
         - name: Go
           import_tasks: tasks/go.yml
           tags: ["go"]
@@ -64,6 +62,9 @@
         - name: Config files
           import_tasks: tasks/config.yml
           tags: ["config"]
+        - name: pyenv
+          import_tasks: tasks/pyenv.yml
+          tags: ["pyenv"]
         - name: Terminal
           import_tasks: tasks/terminal.yml
           tags: ["terminal"]

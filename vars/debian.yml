@@ -1,12 +1,28 @@
 apt_keys:
-  - spotify: https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg
-  - 1password: https://downloads.1password.com/linux/keys/1password.asc
+  spotify: https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg
+  1password: https://downloads.1password.com/linux/keys/1password.asc
+  microsoft: https://packages.microsoft.com/keys/microsoft.asc
 apt_repositories:
-  - spotify: "deb http://repository.spotify.com stable non-free"
-  - 1password: "deb [arch=amd64 signed-by=/usr/share/keyrings/1password.gpg] https://downloads.1password.com/linux/debian/amd64 stable main"
+  spotify: "deb [signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free"
+  1password: "deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main"
+  vscode: "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/code stable main"
 apt_packages_to_install:
   - 1password
-  - spotify
+  - bash-completion
+  - clang
+  - cmake
+  - code-insiders
+  - golang
+  - libfreetype6-dev 
+  - libfontconfig1-dev 
+  - libxcb-xfixes0-dev 
+  - libxkbcommon-dev 
+  - llvm
+  - neovim
+  - openjdk-11-jdk
+  - pkg-config
+  - spotify-client
+  - syncthing
 
 apt_packages_to_remove:
   - akonadi
