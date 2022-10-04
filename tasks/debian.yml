@@ -13,6 +13,7 @@
   apt:
     pkg: "{{ apt_packages_to_install }}"
     state: present
+  tags: ["install-packages"]
 - name: Remove packages
   apt:
     pkg: "{{ apt_packages_to_remove }}"

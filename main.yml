@@ -7,6 +7,7 @@
     - "vars/redhat.yml"
     - "vars/flatpak.yml"
     - "vars/debian.yml"
+    - "vars/ubuntu.yml"
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
@@ -18,7 +19,11 @@
           import_tasks: tasks/redhat.yml
           when: ansible_os_family == "RedHat"
           tags: ["fedora", "rocky"]
-        - name: Debian system configuration
+        - name: Ubuntu-specific configuration
+          import_tasks: tasks/ubuntu.yml
+          when: ansible_facts['distribution'] == "Ubuntu"
+          tags: ["ubuntu", "pop"]
+        - name: Debian/Ubuntu system configuration
           import_tasks: tasks/debian.yml
           when: ansible_os_family == "Debian"
           tags: ["ubuntu", "debian", "pop"]

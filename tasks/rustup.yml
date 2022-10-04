@@ -22,4 +22,8 @@
           register: output
           changed_when: '"Rust is installed now" in output.stdout'
           failed_when: output.rc != 0
+        - name: Bash completions
+          shell: rustup completions bash > ~/.local/share/bash-completion/completions/rustup && rustup completions bash cargo > ~/.local/share/bash-completion/completions/cargo
+          register: output
+          failed_when: output.rc != 0
       when: "rustup_installed.rc != 0"
