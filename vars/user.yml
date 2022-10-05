@@ -9,7 +9,6 @@ fonts_to_install:
   CascadiaCode: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip
   SourceCodePro: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip
 
-fzf_to_install: https://github.com/junegunn/fzf/releases/download/0.33.0/fzf-0.33.0-linux_amd64.tar.gz
 python_to_install: 3.10.6
 python_packages_to_install:
   - ipython

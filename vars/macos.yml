@@ -4,7 +4,6 @@ homebrew_packages_to_install:
   - bash-completion
   - cmake
   - curl
-  - fzf
   - gcc
   - git
   - go
