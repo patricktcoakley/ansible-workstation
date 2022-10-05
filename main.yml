@@ -6,6 +6,8 @@
     - "vars/macos.yml"
     - "vars/redhat.yml"
     - "vars/flatpak.yml"
+    - "vars/debian.yml"
+    - "vars/ubuntu.yml"
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
@@ -13,20 +15,28 @@
   tasks:
     - name: System configuration
       block:
-        - name: Fedora system configuration
+        - name: RedHat system configuration
           import_tasks: tasks/redhat.yml
           when: ansible_os_family == "RedHat"
           tags: ["fedora", "rocky"]
-        - name: Flatpak installation
-          import_tasks: tasks/flatpak.yml
-          when: ansible_system == "Linux"
-          tags: ["flatpak"]
+        - name: Ubuntu-specific configuration
+          import_tasks: tasks/ubuntu.yml
+          when: ansible_facts['distribution'] == "Ubuntu"
+          tags: ["ubuntu", "pop"]
+        - name: Debian/Ubuntu system configuration
+          import_tasks: tasks/debian.yml
+          when: ansible_os_family == "Debian"
+          tags: ["ubuntu", "debian", "pop"]
         - name: macOS system configration
           import_tasks: tasks/macos.yml
           when: ansible_os_family == "Darwin"
           tags: ["mac"]
           become: false
           become_user: "{{ user }}"
+        - name: Flatpak installation
+          import_tasks: tasks/flatpak.yml
+          when: ansible_os_family == "RedHat"
+          tags: ["flatpak"]
         - name: systemd
           import_tasks: tasks/systemd.yml
           when: ansible_system == "Linux" 
@@ -48,9 +58,6 @@
         - name: rustup
           import_tasks: tasks/rustup.yml
           tags: ["rustup"]
-        - name: pyenv
-          import_tasks: tasks/pyenv.yml
-          tags: ["pyenv"]
         - name: Go
           import_tasks: tasks/go.yml
           tags: ["go"]
@@ -60,6 +67,9 @@
         - name: Config files
           import_tasks: tasks/config.yml
           tags: ["config"]
+        - name: pyenv
+          import_tasks: tasks/pyenv.yml
+          tags: ["pyenv"]
         - name: Terminal
           import_tasks: tasks/terminal.yml
           tags: ["terminal"]

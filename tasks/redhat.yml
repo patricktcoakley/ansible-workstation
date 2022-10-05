@@ -22,14 +22,14 @@
   copy:
     dest: "{{ item.dest }}"
     content: "{{ item.content }}"
-  loop: "{{ repositories }}"
+  loop: "{{ dnf_repositories }}"
 - name: Install packages
   dnf:
-    name: "{{ packages_to_install }}"
+    name: "{{ dnf_packages_to_install }}"
     state: present
 - name: Remove unwanted packages
   dnf:
-    name: "{{ packages_to_remove }}"
+    name: "{{ dnf_packages_to_remove }}"
     state: absent
 - name: Upgrade all packages
   dnf:

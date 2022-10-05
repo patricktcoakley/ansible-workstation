@@ -27,7 +27,7 @@
       failed_when: "python_to_install != output.stdout or output.rc != 0"
       changed_when: false
     - name: Ensure Python packages are installed to global pyenv
-      shell: 'sh -c /bin/bash && pip install {{ python_packages_to_install | join(" ") }}'
+      shell: '$HOME/.pyenv/shims/pip install {{ python_packages_to_install | join(" ") }}'
       register: output
       failed_when: output.rc != 0
       changed_when: '"Requirement already satisfied" not in output.stdout'

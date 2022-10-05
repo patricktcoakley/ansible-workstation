@@ -11,7 +11,6 @@
 export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
 export EDITOR="nvim"
-export GTK_USE_PORTAL=1
 export JAVA_HOME="/usr/lib/jvm/java"
 export JAVA_INCLUDE_DIR="$JAVA_HOME/include"
 export PYENV_ROOT="$HOME/.pyenv"

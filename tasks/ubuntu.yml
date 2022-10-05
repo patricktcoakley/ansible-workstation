@@ -1,0 +1,5 @@
+---
+- name: Add PPAs
+  apt_repository:
+    repo: "{{ item }}"
+  loop: "{{ ppas_to_add }}"
