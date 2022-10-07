@@ -1,10 +1,11 @@
 ---
-- name: Install terminal packages
+- name: Install cargo packages
+  shell: $HOME/.cargo/bin/cargo install zellij alacritty ripgrep starship skim
+  register: output
+  failed_when: output.rc != 0
+  tags: ["terminal"]
+- name: Setup Alacritty desktop file
   block:
-    - name: Install cargo packages
-      shell: $HOME/.cargo/bin/cargo install zellij alacritty ripgrep starship skim
-      register: output
-      failed_when: output.rc != 0
     - name: Ensure applications folder is created
       file:
         path: $HOME/.local/share/applications
@@ -26,4 +27,5 @@
         cmd: update-desktop-database ~/.local/share/applications
       register: output
       failed_when: output.rc != 0
+  when: ansible_os_family != "Darwin"
   tags: ["terminal"]
