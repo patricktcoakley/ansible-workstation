@@ -8,6 +8,7 @@
     - "vars/flatpak.yml"
     - "vars/debian.yml"
     - "vars/ubuntu.yml"
+    - "vars/arch.yml"
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
@@ -61,6 +62,7 @@
         - name: Go
           import_tasks: tasks/go.yml
           tags: ["go"]
+          when: 'anisble_system == "Linux" && ansible_os_family != "ArchLinux"'
         - name: Flutter
           import_tasks: tasks/flutter.yml
           tags: ["flutter"]
@@ -73,6 +75,7 @@
         - name: Terminal
           import_tasks: tasks/terminal.yml
           tags: ["terminal"]
+          when: 'anisble_system == "Linux" && ansible_os_family != "ArchLinux"'
         - name: Android Studio
           import_tasks: tasks/android.yml
           tags: ["android"]

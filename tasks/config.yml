@@ -1,7 +1,7 @@
 ---
 - name: Ensure .bashrc is created
-  copy:
-    src: files/home/.bashrc
+  template:
+    src: "templates/.bashrc.j2"
     dest: $HOME/.bashrc
 - name: Ensure .bash_profile is created
   copy:
