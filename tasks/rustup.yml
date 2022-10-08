@@ -31,3 +31,17 @@
           register: output
           failed_when: output.rc != 0
       when: "rustup_installed.rc != 0"
+- name: rust-analyzer
+  block:
+    - name: Ensure repo is downloaded
+      git:
+        repo: "https://github.com/rust-lang/rust-analyzer.git"
+        dest: $HOME/.rustanalyzer
+        update: yes
+    - name: Install rust analyzer binary
+      shell:
+        cmd: cargo xtask install --server
+        chdir: $HOME/.rustanalyzer
+      register: output
+      failed_when: output.rc != 0
+      changed_when: false

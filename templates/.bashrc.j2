@@ -1,5 +1,5 @@
 # Source global definitions
-[ -f /etc/bashrc ] && source /etc/bashrc
+[ -f /etc/bash.bashrc ] && source /etc/bash.bashrc
 
 # Source user definitions
 [ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env"
@@ -10,7 +10,7 @@
 {% if desktop == "kde" %}
 export GTK_USE_PORTAL=1
 {% endif %}
-{% if 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"' %}
+{% if ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux" %}
 export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
 {% endif %}
@@ -18,7 +18,7 @@ export EDITOR="nvim"
 export JAVA_HOME="/usr/lib/jvm/default"
 export JAVA_INCLUDE_DIR="$JAVA_HOME/include"
 export PATH="$HOME/go/bin:$PATH"
-{% if 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"' %}
+{% if ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux" %}
 export PATH="$HOME/flutter/bin:$PATH"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
@@ -30,7 +30,6 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 # Aliases
 alias code="code-insiders"
-alias codeext="code-insiders --list-extensions"
 alias ll="ls -alh"
 
 # User specific environment and startup programs
