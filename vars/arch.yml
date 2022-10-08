@@ -10,12 +10,12 @@ pacman_packages_to_install:
   - gcc
   - git
   - gitui
-  - glfw-wayland
   - glfw-x11
   - go
   - godot
   - helix
   - htop
+  - jdk-openjdk
   - kate
   - krita
   - libx11

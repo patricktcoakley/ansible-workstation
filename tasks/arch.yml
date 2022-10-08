@@ -7,17 +7,3 @@
   community.general.pacman:
     update_cache: true
     upgrade: true
-- name: Skip if yay installed
-  cmd: command -v yay
-  register: output
-  block:
-    - name: Ensure yay repo is pulled
-      git:
-        repo: "https://aur.archlinux.org/yay.git"
-        dest: $HOME/yay
-        update: yes
-    - name: Install yay
-      cmd: "sh -c cmd $HOME/yay && makepkg -csri"
-  when: output.rc != 0
-- name: Install AUR packages with yay
-  cmd: "yay -S {{ aur_packages_to_install }}"
