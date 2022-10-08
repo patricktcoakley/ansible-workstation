@@ -3,8 +3,10 @@ pacman_packages_to_install:
   - alsa-lib
   - base-devel
   - bash-completion
+  - bash-language-server
   - clang
   - cmake
+  - delve
   - discord
   - firefox
   - gcc
@@ -13,6 +15,7 @@ pacman_packages_to_install:
   - glfw-x11
   - go
   - godot
+  - gopls
   - helix
   - htop
   - jdk-openjdk
@@ -24,6 +27,7 @@ pacman_packages_to_install:
   - libxinerama
   - libxrandr
   - lldb
+  - lua-language-server
   - lutris
   - mesa
   - neovim
@@ -33,6 +37,7 @@ pacman_packages_to_install:
   - pkgconf
   - qbittorrent
   - ripgrep
+  - rust-analyzer
   - sdl2
   - skim
   - sqlite
@@ -40,11 +45,15 @@ pacman_packages_to_install:
   - steam
   - syncthing
   - sysstat
+  - taplo
   - thunderbird
+  - typescript-language-server
   - vlc
+  - vscode-json-languageserver
   - zellij
+
 aur_packages_to_install:
-  - spotify
-  - visual-studio-code-insiders-bin
   - 1password
   - mullvad-vpn
+  - spotify
+  - visual-studio-code-insiders-bin
