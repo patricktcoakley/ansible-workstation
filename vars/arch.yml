@@ -1,9 +1,18 @@
 pacman_packages_to_install:
+  - adobe-source-han-sans-cn-fonts
+  - adobe-source-han-sans-hk-fonts
+  - adobe-source-han-sans-jp-fonts
+  - adobe-source-han-sans-tw-fonts
+  - adobe-source-han-serif-cn-fonts
+  - adobe-source-han-serif-hk-fonts
+  - adobe-source-han-serif-jp-fonts
+  - adobe-source-han-serif-tw-fonts
   - alacritty
   - alsa-lib
   - base-devel
   - bash-completion
   - bash-language-server
+  - bluez-utils
   - clang
   - cmake
   - delve
@@ -20,6 +29,7 @@ pacman_packages_to_install:
   - htop
   - jdk-openjdk
   - kate
+  - kcalc
   - krita
   - ksysguard
   - libx11
@@ -28,14 +38,19 @@ pacman_packages_to_install:
   - libxinerama
   - libxrandr
   - lldb
+  - llvm
   - lua-language-server
   - lutris
+  - man-db
   - mesa
   - neovim
   - ninja
+  - okular
   - obs-studio
+  - otf-ipafont
   - pkg-config
   - pkgconf
+  - power-profiles-daemon
   - qbittorrent
   - ripgrep
   - rust-analyzer
@@ -49,8 +64,10 @@ pacman_packages_to_install:
   - taplo
   - thunderbird
   - typescript-language-server
+  - unzip
   - vlc
   - vscode-json-languageserver
+  - xdg-desktop-portal
   - zellij
 
 aur_packages_to_install:
