@@ -21,6 +21,7 @@ pacman_packages_to_install:
   - jdk-openjdk
   - kate
   - krita
+  - ksysguard
   - libx11
   - libxcursor
   - libxi

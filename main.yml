@@ -57,30 +57,15 @@
         - name: Git
           import_tasks: tasks/git.yml
           tags: ["git"]
-        - name: Neovim
-          import_tasks: tasks/neovim.yml
-          tags: ["neovim"]
         - name: rustup
           import_tasks: tasks/rustup.yml
           tags: ["rustup"]
-        - name: Go
-          import_tasks: tasks/go.yml
-          tags: ["go"]
-          when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
-        - name: Flutter
-          import_tasks: tasks/flutter.yml
-          tags: ["flutter"]
-          when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
         - name: Config files
           import_tasks: tasks/config.yml
           tags: ["config"]
         - name: Terminal
           import_tasks: tasks/terminal.yml
           tags: ["terminal"]
-          when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
-        - name: Android Studio
-          import_tasks: tasks/android.yml
-          tags: ["android"]
           when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
         - name: Code
           import_tasks: tasks/code.yml
