@@ -18,6 +18,9 @@
   tags: ["alacritty"]
 - name: Zellij configuration
   block:
+    - name: Get config path
+      set_fact:
+        zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     - name: Ensure zellij folder is created
       file:
         path: "{{ zellij_config_path }}"

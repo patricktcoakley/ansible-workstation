@@ -6,6 +6,9 @@
     option: max_parallel_downloads
     value: 20
     no_extra_spaces: yes
+- name: Get RedHat platform
+  set_fact:
+    redhat_platform: "{{(ansible_facts['distribution'] == 'Fedora') | ternary('fedora', 'el') }}"
 - name: Install and enable the free RPM Fusion repositories
   dnf:
     name:

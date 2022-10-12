@@ -1,0 +1,30 @@
+---
+- name: Arch system configuration
+  import_tasks: tasks/arch.yml
+  when: ansible_facts['distribution']  == "Archlinux"
+  tags: ["arch"]
+- name: RedHat system configuration
+  import_tasks: tasks/redhat.yml
+  when: ansible_os_family == "RedHat"
+  tags: ["fedora", "rocky"]
+- name: Ubuntu-specific configuration
+  import_tasks: tasks/ubuntu.yml
+  when: ansible_facts['distribution'] == "Ubuntu"
+  tags: ["ubuntu", "pop"]
+- name: Debian/Ubuntu system configuration
+  import_tasks: tasks/debian.yml
+  when: ansible_os_family == "Debian"
+  tags: ["ubuntu", "debian", "pop"]
+- name: systemd
+  import_tasks: tasks/systemd.yml
+  tags: ["systemd"]
+- name: Flatpak installation
+  import_tasks: tasks/flatpak.yml
+  when: ansible_os_family == "RedHat"
+  tags: ["flatpak"]
+- name: Terminal
+  import_tasks: tasks/terminal.yml
+  tags: ["terminal"]
+  become: false
+  become_user: "{{ user }}"
+  when: ansible_facts["distribution"] != "Archlinux"

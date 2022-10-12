@@ -2,53 +2,28 @@
 - hosts: localhost
   vars_files:
     - "vars/user.yml"
-    - "vars/linux.yml"
     - "vars/macos.yml"
     - "vars/redhat.yml"
     - "vars/flatpak.yml"
     - "vars/debian.yml"
     - "vars/ubuntu.yml"
     - "vars/arch.yml"
-  vars:
-    zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
-    code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
-    redhat_platform: "{{(ansible_facts['distribution'] == 'Fedora') | ternary('fedora', 'el') }}"
+    - "vars/linux.yml"
   tasks:
     - name: System configuration
       block:
-        - name: Arch system configuration
-          import_tasks: tasks/arch.yml
-          when: ansible_facts['distribution']  == "Archlinux"
-          tags: ["arch"]
-        - name: RedHat system configuration
-          import_tasks: tasks/redhat.yml
-          when: ansible_os_family == "RedHat"
-          tags: ["fedora", "rocky"]
-        - name: Ubuntu-specific configuration
-          import_tasks: tasks/ubuntu.yml
-          when: ansible_facts['distribution'] == "Ubuntu"
-          tags: ["ubuntu", "pop"]
-        - name: Debian/Ubuntu system configuration
-          import_tasks: tasks/debian.yml
-          when: ansible_os_family == "Debian"
-          tags: ["ubuntu", "debian", "pop"]
+        - name: Linux system configuration
+          import_tasks: tasks/linux.yml
+          when: ansible_system == "Linux"
+          tags: ["linux"]
         - name: macOS system configration
           import_tasks: tasks/macos.yml
           when: ansible_os_family == "Darwin"
           tags: ["mac"]
           become: false
           become_user: "{{ user }}"
-        - name: Flatpak installation
-          import_tasks: tasks/flatpak.yml
-          when: ansible_os_family == "RedHat"
-          tags: ["flatpak"]
-        - name: systemd
-          import_tasks: tasks/systemd.yml
-          when: ansible_system == "Linux" 
-          tags: ["systemd"]
       tags: ["system"]
       become: true
-
     - name: User configuration
       block:
         - name: Fonts
@@ -63,10 +38,6 @@
         - name: Config files
           import_tasks: tasks/config.yml
           tags: ["config"]
-        - name: Terminal
-          import_tasks: tasks/terminal.yml
-          tags: ["terminal"]
-          when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
         - name: Code
           import_tasks: tasks/code.yml
           tags: ["code"]
