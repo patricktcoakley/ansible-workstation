@@ -8,6 +8,7 @@
     - "vars/flatpak.yml"
     - "vars/debian.yml"
     - "vars/ubuntu.yml"
+    - "vars/arch.yml"
   vars:
     zellij_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('/Library/Application Support/org.Zellij-Contributors.Zellij', '.config/zellij')}}"
     code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
@@ -15,6 +16,10 @@
   tasks:
     - name: System configuration
       block:
+        - name: Arch system configuration
+          import_tasks: tasks/arch.yml
+          when: ansible_facts['distribution']  == "Archlinux"
+          tags: ["arch"]
         - name: RedHat system configuration
           import_tasks: tasks/redhat.yml
           when: ansible_os_family == "RedHat"
@@ -52,31 +57,16 @@
         - name: Git
           import_tasks: tasks/git.yml
           tags: ["git"]
-        - name: Neovim
-          import_tasks: tasks/neovim.yml
-          tags: ["neovim"]
         - name: rustup
           import_tasks: tasks/rustup.yml
           tags: ["rustup"]
-        - name: Go
-          import_tasks: tasks/go.yml
-          tags: ["go"]
-        - name: Flutter
-          import_tasks: tasks/flutter.yml
-          tags: ["flutter"]
         - name: Config files
           import_tasks: tasks/config.yml
           tags: ["config"]
-        - name: pyenv
-          import_tasks: tasks/pyenv.yml
-          tags: ["pyenv"]
         - name: Terminal
           import_tasks: tasks/terminal.yml
           tags: ["terminal"]
-        - name: Android Studio
-          import_tasks: tasks/android.yml
-          tags: ["android"]
-          when: ansible_system == "Linux"
+          when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
         - name: Code
           import_tasks: tasks/code.yml
           tags: ["code"]

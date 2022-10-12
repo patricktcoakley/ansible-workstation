@@ -22,8 +22,28 @@
           register: output
           changed_when: '"Rust is installed now" in output.stdout'
           failed_when: output.rc != 0
+        - name: Ensure bash completions folder is created
+          file:
+            path: $HOME/.local/share/bash-completion/completions
+            state: directory
         - name: Bash completions
-          shell: rustup completions bash > ~/.local/share/bash-completion/completions/rustup && rustup completions bash cargo > ~/.local/share/bash-completion/completions/cargo
+          shell: $HOME/.cargo/bin/rustup completions bash > ~/.local/share/bash-completion/completions/rustup && $HOME/.cargo/bin/rustup completions bash cargo > ~/.local/share/bash-completion/completions/cargo
           register: output
           failed_when: output.rc != 0
       when: "rustup_installed.rc != 0"
+- name: rust-analyzer
+  block:
+    - name: Ensure repo is downloaded
+      git:
+        repo: "https://github.com/rust-lang/rust-analyzer.git"
+        dest: $HOME/.rustanalyzer
+        update: yes
+    - name: Install rust analyzer binary
+      shell:
+        cmd: cargo xtask install --server
+        chdir: $HOME/.rustanalyzer
+      register: output
+      failed_when: output.rc != 0
+      changed_when: false
+  when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
+

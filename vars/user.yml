@@ -3,17 +3,12 @@ user: patrick
 editor: nvim
 git_name: "Patrick T Coakley"
 git_email: contact@patricktcoakley.com
+desktop: kde
 
 # Packages
 fonts_to_install:
   CascadiaCode: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip
   SourceCodePro: https://github.com/ryanoasis/nerd-fonts/releases/latest/download/SourceCodePro.zip
-
-python_to_install: 3.10.6
-python_packages_to_install:
-  - ipython
-  - autopep8
-  - mkdocs
 rust_to_install: stable
 go_to_install: 1.19.1
 code_extensions_to_install:
