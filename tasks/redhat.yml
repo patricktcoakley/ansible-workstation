@@ -30,6 +30,9 @@
   dnf:
     name: "{{ dnf_packages_to_install }}"
     state: present
+- name: Install Fedora-specific packages
+  dnf:
+    name: "alacritty starship ripgrep skim"
 - name: Remove unwanted packages
   dnf:
     name: "{{ dnf_packages_to_remove }}"

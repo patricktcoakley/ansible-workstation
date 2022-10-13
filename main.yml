@@ -41,6 +41,9 @@
         - name: Code
           import_tasks: tasks/code.yml
           tags: ["code"]
+        - name: Terminal 
+          import_tasks: tasks/terminal.yml
+          tags: ["terminal"]
       tags: ["user"]
       become: false
       become_user: "{{ user }}"

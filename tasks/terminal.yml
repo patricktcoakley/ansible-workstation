@@ -1,6 +1,10 @@
 ---
+- name: Set packages
+  set_fact:
+    terminal_packages: "{{ redhat_platform }} == 'el' | ternary('zellij alacritty ripgrep starship skim', 'zellij')"
+
 - name: Install cargo packages
-  shell: $HOME/.cargo/bin/cargo install zellij alacritty ripgrep starship skim
+  shell: "$HOME/.cargo/bin/cargo install {{ terminal_packages }}"
   register: output
   failed_when: output.rc != 0
   tags: ["terminal"]
@@ -27,5 +31,5 @@
         cmd: update-desktop-database ~/.local/share/applications
       register: output
       failed_when: output.rc != 0
-  when: ansible_os_family != "Darwin"
+  when: "ansible_os_family != 'Darwin' and {{ redhat_platform }} == 'el'"
   tags: ["terminal"]
