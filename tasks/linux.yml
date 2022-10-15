@@ -22,9 +22,3 @@
   import_tasks: tasks/flatpak.yml
   when: ansible_os_family == "RedHat"
   tags: ["flatpak"]
-- name: Terminal
-  import_tasks: tasks/terminal.yml
-  tags: ["terminal"]
-  become: false
-  become_user: "{{ user }}"
-  when: ansible_facts["distribution"] != "Archlinux"

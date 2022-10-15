@@ -1,5 +1,9 @@
 # Source global definitions
+{% if ansible_os_family == "RedHat" %} 
+[ -f /etc/bashrc ] && source /etc/bashrc
+{% else %}
 [ -f /etc/bash.bashrc ] && source /etc/bash.bashrc
+{% endif %}
 
 # Source user definitions
 [ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env"

@@ -40,10 +40,24 @@
         update: yes
     - name: Install rust analyzer binary
       shell:
-        cmd: cargo xtask install --server
+        cmd: $HOME/.cargo/bin/cargo xtask install --server
         chdir: $HOME/.rustanalyzer
       register: output
       failed_when: output.rc != 0
       changed_when: false
   when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
-
+- name: helix
+  block:
+    - name: Ensure repo is downloaded
+      git:
+        repo: "https://github.com/helix-editor/helix"
+        dest: $HOME/.helix
+        update: yes
+    - name: Install helix binary
+      shell:
+        cmd: $HOME/.cargo/bin/cargo install --path helix-term
+        chdir: $HOME/.helix
+      register: output
+      failed_when: output.rc != 0
+      changed_when: false
+  when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
