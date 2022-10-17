@@ -3,7 +3,7 @@ user: patrick
 editor: nvim
 git_name: "Patrick T Coakley"
 git_email: contact@patricktcoakley.com
-desktop: kde
+desktop: gnome
 
 # Packages
 fonts_to_install:
@@ -42,6 +42,5 @@ code_extensions_to_install:
   - sumneko.lua
   - twxs.cmake
   - vadimcn.vscode-lldb
-  - vscodevim.vim
   - wholroyd.jinja
   - yzhang.markdown-all-in-one

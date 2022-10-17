@@ -7,14 +7,10 @@
   import_tasks: tasks/redhat.yml
   when: ansible_os_family == "RedHat"
   tags: ["fedora", "rocky"]
-- name: Ubuntu-specific configuration
+- name: Ubuntu system configuration
   import_tasks: tasks/ubuntu.yml
   when: ansible_facts['distribution'] == "Ubuntu"
   tags: ["ubuntu", "pop"]
-- name: Debian/Ubuntu system configuration
-  import_tasks: tasks/debian.yml
-  when: ansible_os_family == "Debian"
-  tags: ["ubuntu", "debian", "pop"]
 - name: systemd
   import_tasks: tasks/systemd.yml
   tags: ["systemd"]

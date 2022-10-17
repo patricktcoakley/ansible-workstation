@@ -60,4 +60,6 @@
       register: output
       failed_when: output.rc != 0
       changed_when: false
+    - name: Link runtime directory
+      shell: ln -s $HOME/.helix/runtime $HOME/.config/helix/runtime
   when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'

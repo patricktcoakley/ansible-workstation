@@ -5,7 +5,6 @@
     - "vars/macos.yml"
     - "vars/redhat.yml"
     - "vars/flatpak.yml"
-    - "vars/debian.yml"
     - "vars/ubuntu.yml"
     - "vars/arch.yml"
     - "vars/linux.yml"

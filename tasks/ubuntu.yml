@@ -3,3 +3,19 @@
   apt_repository:
     repo: "{{ item }}"
   loop: "{{ ppas_to_add }}"
+- name: Install packages
+  apt:
+    pkg: "{{ apt_packages_to_install }}"
+    state: present
+  tags: ["install-packages"]
+- name: Remove packages
+  apt:
+    pkg: "{{ apt_packages_to_remove }}"
+    state: absent
+- name: Update all packages to their latest version
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+- name: Install snaps
+  community.general.snap:
+    name: "{{ snaps_to_install }}"

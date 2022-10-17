@@ -4,6 +4,7 @@
 {% else %}
 [ -f /etc/bash.bashrc ] && source /etc/bash.bashrc
 {% endif %}
+[ -f /etc/bash_completion ] && source /etc/bash_completion
 
 # Source user definitions
 [ -f $HOME/.cargo/env ] && source "$HOME/.cargo/env"
