@@ -31,35 +31,3 @@
           register: output
           failed_when: output.rc != 0
       when: "rustup_installed.rc != 0"
-- name: rust-analyzer
-  block:
-    - name: Ensure repo is downloaded
-      git:
-        repo: "https://github.com/rust-lang/rust-analyzer.git"
-        dest: $HOME/.rustanalyzer
-        update: yes
-    - name: Install rust analyzer binary
-      shell:
-        cmd: $HOME/.cargo/bin/cargo xtask install --server
-        chdir: $HOME/.rustanalyzer
-      register: output
-      failed_when: output.rc != 0
-      changed_when: false
-  when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
-- name: helix
-  block:
-    - name: Ensure repo is downloaded
-      git:
-        repo: "https://github.com/helix-editor/helix"
-        dest: $HOME/.helix
-        update: yes
-    - name: Install helix binary
-      shell:
-        cmd: $HOME/.cargo/bin/cargo install --path helix-term
-        chdir: $HOME/.helix
-      register: output
-      failed_when: output.rc != 0
-      changed_when: false
-    - name: Link runtime directory
-      shell: ln -s $HOME/.helix/runtime $HOME/.config/helix/runtime
-  when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'

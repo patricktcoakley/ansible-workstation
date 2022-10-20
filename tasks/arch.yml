@@ -7,13 +7,13 @@
   community.general.pacman:
     update_cache: true
     upgrade: true
+- name: Skip if installed
+  shell: "command -v paru"
+  register: is_installed
+  failed_when: false
+  changed_when: false
 - name: Install AUR helper
   block:
-    - name: Skip if installed
-      shell: "command -v paru"
-      register: is_installed
-      failed_when: false
-      changed_when: false
     - name: Pull down git repo
       git:
         repo: "https://aur.archlinux.org/paru.git"
@@ -21,7 +21,7 @@
         update: yes
     - name: Install
       shell:
-        cmd: makepkg -si
+        cmd: makepkg -si --no-confirm
         chdir: $HOME/.paru
       register: output
       failed_when: output.rc != 0
