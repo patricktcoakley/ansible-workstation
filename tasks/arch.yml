@@ -7,8 +7,30 @@
   community.general.pacman:
     update_cache: true
     upgrade: true
+- name: Install AUR helper
+  block:
+    - name: Skip if installed
+      shell: "command -v paru"
+      register: is_installed
+      failed_when: false
+      changed_when: false
+    - name: Pull down git repo
+      git:
+        repo: "https://aur.archlinux.org/paru.git"
+        dest: $HOME/.paru
+        update: yes
+    - name: Install
+      shell:
+        cmd: makepkg -si
+        chdir: $HOME/.paru
+      register: output
+      failed_when: output.rc != 0
+      changed_when: false
+  when: is_installed.rc != 0
+  become_user: "{{ user }}"
+  tags: ["aur"]
 - name: Ensure AUR packages are installed
-  shell: "whoami && yay -S --noconfirm --noprogressbar --needed {{ aur_packages_to_install | join(' ')}}"
+  shell: "yay -S --noconfirm --noprogressbar --needed {{ aur_packages_to_install | join(' ')}}"
   register: output
   failed_when: output.rc != 0
   changed_when: false

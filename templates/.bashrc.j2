@@ -27,6 +27,9 @@ export PATH="/opt/homebrew/bin:$PATH"
 # Aliases
 alias code="code-insiders"
 alias ll="ls -alh"
+{% if ansible_facts['distribution']  == "Archlinux" %}
+alias hx="helix"
+{% endif %}
 
 # User specific environment and startup programs
 eval "$(starship init bash)"
