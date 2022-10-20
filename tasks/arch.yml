@@ -30,7 +30,7 @@
   become_user: "{{ user }}"
   tags: ["aur"]
 - name: Ensure AUR packages are installed
-  shell: "yay -S --noconfirm --noprogressbar --needed {{ aur_packages_to_install | join(' ')}}"
+  shell: "paru -S --noconfirm --noprogressbar --needed {{ aur_packages_to_install | join(' ')}}"
   register: output
   failed_when: output.rc != 0
   changed_when: false
