@@ -1,17 +1,17 @@
 ---
 - name: Get config path
   set_fact:
-    code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code - Insiders/User"
+    code_config_path: "$HOME/{{(ansible_os_family == 'Darwin') | ternary('Library/Application Support/', '.config/')}}Code/User"
 - name: Ensure Code directory is created
   file:
     path: "{{ code_config_path }}"
     state: directory
 - name: Ensure Code settings.json is created
   copy:
-    src: files/home/.config/Code - Insiders/User/settings.json
+    src: files/home/.config/Code/User/settings.json
     dest: "{{ code_config_path }}/settings.json"
 - name: Code extensions installation
-  shell: "code-insiders --install-extension {{ item }}"
+  shell: "code --install-extension {{ item }}"
   loop: "{{ code_extensions_to_install }}"
   register: output
   failed_when: output.rc != 0

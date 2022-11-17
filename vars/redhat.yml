@@ -56,6 +56,7 @@ dnf_packages_to_install:
   - libXxf86vm-devel
   - lldb
   - llvm
+  - lutris
   - mesa-libEGL-devel
   - mesa-libGL-devel
   - mesa-libGLES-devel

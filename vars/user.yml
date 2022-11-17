@@ -3,7 +3,7 @@ user: patrick
 editor: nvim
 git_name: "Patrick T Coakley"
 git_email: contact@patricktcoakley.com
-desktop: gnome
+desktop: kde
 
 # Packages
 fonts_to_install:

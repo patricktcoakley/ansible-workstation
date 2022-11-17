@@ -38,6 +38,7 @@ apt_packages_to_install:
   - libxrandr-dev
   - libxxf86vm-dev
   - lldb
+  - lutris
   - llvm
   - neovim
   - ninja-build

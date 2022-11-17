@@ -1,6 +1,6 @@
 ---
 - name: Install cargo packages
-  shell: "$HOME/.cargo/bin/cargo install zellij alacritty ripgrep starship skim"
+  shell: "$HOME/.cargo/bin/cargo install zellij alacritty ripgrep starship skim --locked"
   register: output
   failed_when: output.rc != 0
   tags: ["terminal"]
