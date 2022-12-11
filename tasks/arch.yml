@@ -21,7 +21,7 @@
         update: yes
     - name: Install
       shell:
-        cmd: makepkg -si --no-confirm
+        cmd: makepkg -si --noconfirm
         chdir: $HOME/.paru
       register: output
       failed_when: output.rc != 0

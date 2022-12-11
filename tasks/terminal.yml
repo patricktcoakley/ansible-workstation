@@ -4,6 +4,7 @@
   register: output
   failed_when: output.rc != 0
   tags: ["terminal"]
+  when: 'ansible_system == "Linux" and ansible_facts["distribution"]  != "Archlinux"'
 - name: Setup Alacritty desktop file
   block:
     - name: Ensure applications folder is created

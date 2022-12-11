@@ -69,4 +69,4 @@ aur_packages_to_install:
   - 1password
   - mullvad-vpn
   - spotify
-  - visual-studio-code-insiders-bin
+  - visual-studio-code-bin
